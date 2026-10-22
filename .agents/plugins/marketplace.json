@@ -27,6 +27,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "web"
+    },
+    {
+      "name": "audit-active-record-concurrency",
+      "source": {
+        "source": "local",
+        "path": "./plugins/audit-active-record-concurrency"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "web"
     }
   ]
 }

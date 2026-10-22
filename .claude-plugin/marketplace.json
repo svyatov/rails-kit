@@ -33,6 +33,17 @@
         "test-prof",
         "rspec"
       ]
+    },
+    {
+      "name": "audit-active-record-concurrency",
+      "source": "./plugins/audit-active-record-concurrency",
+      "description": "Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
     }
   ]
 }

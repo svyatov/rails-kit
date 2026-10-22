@@ -4,6 +4,8 @@
 
 ### Added
 
+- Add `audit-active-record-concurrency` 1.0.0: Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants.
+
 - Add `test-performance` 1.0.0, an original Rails test optimization workflow based on Evil Martians' case study, with profiling, side-effect controls, factory optimization, and shared-fixture guides.
 - Initialize Rails Kit with Claude Code and Codex marketplace catalogs.
 - Add `hyperdrive` 1.0.0 from Agent Toolkit's `rails-hyperdrive`, including configuration and source references.
