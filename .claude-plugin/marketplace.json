@@ -20,6 +20,19 @@
         "setup",
         "skills"
       ]
+    },
+    {
+      "name": "test-performance",
+      "source": "./plugins/test-performance",
+      "description": "Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "testing",
+        "performance",
+        "test-prof",
+        "rspec"
+      ]
     }
   ]
 }

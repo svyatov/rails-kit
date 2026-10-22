@@ -4,6 +4,7 @@
 
 ### Added
 
+- Add `test-performance` 1.0.0, an original Rails test optimization workflow based on Evil Martians' case study, with profiling, side-effect controls, factory optimization, and shared-fixture guides.
 - Initialize Rails Kit with Claude Code and Codex marketplace catalogs.
 - Add `hyperdrive` 1.0.0 from Agent Toolkit's `rails-hyperdrive`, including configuration and source references.
 - Validate the marketplace and every plugin in CI on pull requests and pushes to `main`.

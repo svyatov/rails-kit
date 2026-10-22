@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "test-performance",
+  "description": "Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Leonid Svyatov",
+    "email": "leonid@svyatov.com",
+    "url": "https://www.svyatov.com"
+  },
+  "homepage": "https://github.com/svyatov/rails-kit",
+  "repository": "https://github.com/svyatov/rails-kit",
+  "license": "MIT"
+}

@@ -7,6 +7,7 @@ Rails-related skills for Claude Code and Codex. Each skill is an individually in
 | Skill | Description |
 | --- | --- |
 | [hyperdrive](plugins/hyperdrive/skills/hyperdrive/SKILL.md) | Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync. |
+| [test-performance](plugins/test-performance/skills/test-performance/SKILL.md) | Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures. |
 
 ## Installation
 
@@ -27,6 +28,8 @@ codex plugin add hyperdrive@rails-kit
 ```
 
 After installation, ask your agent to set up or maintain Rails Hyperdrive in a Rails application. The skill includes host-specific configuration and verification steps.
+
+To install the test optimization skill, replace `hyperdrive@rails-kit` with `test-performance@rails-kit` in the install command. Ask the agent to profile and speed up the application's test suite. Its guides cover all optimization techniques from the [Evil Martians case study](https://evilmartians.com/chronicles/railing-against-time-tools-and-techniques-that-got-us-5x-faster-results), with measured verification and test-isolation checks.
 
 To install from a local checkout, run these commands from its root and replace `svyatov/rails-kit` with `.` in the marketplace command.
 
