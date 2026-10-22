@@ -44,6 +44,17 @@
         "ruby",
         "audit"
       ]
+    },
+    {
+      "name": "audit-n-plus-one",
+      "source": "./plugins/audit-n-plus-one",
+      "description": "Audit Rails query growth, locate N+1 queries, and verify loading or batching fixes with regression coverage.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
     }
   ]
 }
