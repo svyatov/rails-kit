@@ -1,0 +1,30 @@
+name: Validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Download Claude Code installer
+        run: curl -fsSL https://claude.ai/install.sh --output "$RUNNER_TEMP/install-claude.sh"
+      - name: Install Claude Code
+        run: bash "$RUNNER_TEMP/install-claude.sh"
+      - name: Validate marketplace and plugins
+        shell: ruby {0}
+        run: |
+          claude = File.join(Dir.home, ".local/bin/claude")
+          system(claude, "plugin", "validate", "--strict", "--json", ".", exception: true)
+          Dir.glob("plugins/*/").sort.each do |plugin|
+            system(claude, "plugin", "validate", "--strict", "--json", plugin, exception: true)
+          end
