@@ -51,6 +51,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "web"
+    },
+    {
+      "name": "audit-transactions",
+      "source": {
+        "source": "local",
+        "path": "./plugins/audit-transactions"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "web"
     }
   ]
 }

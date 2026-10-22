@@ -10,6 +10,7 @@ Rails-related skills for Claude Code and Codex. Each skill is an individually in
 | [test-performance](plugins/test-performance/skills/test-performance/SKILL.md) | Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures. |
 | [audit-active-record-concurrency](plugins/audit-active-record-concurrency/skills/audit-active-record-concurrency/SKILL.md) | Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants. |
 | [audit-n-plus-one](plugins/audit-n-plus-one/skills/audit-n-plus-one/SKILL.md) | Audit Rails query growth, locate N+1 queries, and verify loading or batching fixes with regression coverage. |
+| [audit-transactions](plugins/audit-transactions/skills/audit-transactions/SKILL.md) | Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects. |
 
 ## Installation
 

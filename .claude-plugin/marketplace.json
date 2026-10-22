@@ -55,6 +55,17 @@
         "ruby",
         "audit"
       ]
+    },
+    {
+      "name": "audit-transactions",
+      "source": "./plugins/audit-transactions",
+      "description": "Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
     }
   ]
 }

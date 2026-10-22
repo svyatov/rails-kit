@@ -4,6 +4,8 @@
 
 ### Added
 
+- Add `audit-transactions` 1.0.0: Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects.
+
 - Add `audit-n-plus-one` 1.0.0: Audit Rails query growth, locate N+1 queries, and verify loading or batching fixes with regression coverage.
 
 - Add `audit-active-record-concurrency` 1.0.0: Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants.
