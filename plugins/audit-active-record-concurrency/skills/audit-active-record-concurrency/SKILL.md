@@ -14,6 +14,8 @@ Identify invariants that fail when writes overlap. Report findings first; modify
 
 Read the requested write paths, models, migrations, database indexes, adapter, isolation settings, and locked Rails version. Follow every writer of the affected data, including jobs, imports, callbacks, bulk SQL, and deletion paths.
 
+Use the installed Rails version's public persistence APIs. Preserve validations and callbacks that enforce domain behavior; a faster bulk method is not a valid correction if it bypasses that behavior.
+
 State the invariant precisely: for example, one membership per account/user pair, or a counter that includes every accepted increment. Include tenant scope, normalization, soft deletion, and nullable keys where relevant. Compare application validation with the database constraint actually present, not merely an old migration.
 
 Done when the invariant, competing writers, and database enforcement are identified.

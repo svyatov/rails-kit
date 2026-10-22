@@ -22,6 +22,8 @@ Done when the endpoints, consumers, source of truth, and validation path are kno
 
 Read [contract checks](references/contracts.md). Trace and, where possible, exercise path/query/body inputs, success responses, failures, authentication, pagination, and conditional serializer output. Check media types, status codes, headers, field names, types, required keys, nullability, and enums.
 
+Check Rails input and request protections: explicit permitted attributes before mass assignment, authorization separate from parameter filtering, and CSRF protection appropriate to the actual authentication scheme. Preserve native controller/rendering conventions and the existing serializer; schema tooling does not require a new abstraction layer.
+
 Distinguish request construction, schema generation, and runtime validation. A generated document does not prove an endpoint was executed, and a happy-path response does not prove invalid input is rejected.
 
 Done when each mismatch has source evidence or a request/spec result. Mark unexecuted checks as such.

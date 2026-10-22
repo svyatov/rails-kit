@@ -16,6 +16,8 @@ Solid Queue can participate in an application transaction only with the appropri
 
 Native Sidekiq transactional push has its own setup and limitations; inspect the installed version and configuration rather than applying Active Job settings to it. In particular, verify multi-database connection behavior and bulk-enqueue support.
 
+Check enqueue outcomes at the actual boundary. Active Job can return `false` after an aborted enqueue callback or an `ActiveJob::EnqueueError`. For the latter, inspect the job's `enqueue_error`; a callback abort need not populate it. A deferred `perform_later` can return a job before the adapter push happens, so that return value alone does not prove durable acceptance. Solid Queue also raises its own `SolidQueue::Job::EnqueueError`; do not assume every adapter error becomes `false`. Test callback abort, adapter failure, and post-commit push failure using the installed versions.
+
 An after-commit hook solves an ordering problem. A failure or crash before a later queue push can still lose the intended work. If durable delivery is a requirement, identify the missing recovery mechanism and propose a proportionate design, such as existing reconciliation or an outbox. Do not install a new delivery subsystem during a report-only audit.
 
 ## Duplicates and partial effects

@@ -32,6 +32,8 @@ For each finding, give the code location, trigger, consequence, evidence, correc
 
 Preserve the existing client library unless it cannot meet the requirement. A circuit breaker is conditional on a demonstrated isolation need; it does not replace timeouts or make retries safe. Keep fallback behavior explicit so a failed dependency is not silently treated as a successful write.
 
+Use the application's established Rails configuration, credential, and error-reporting interfaces. A custom client framework or new service layer is an optional architectural change, not a prerequisite for correcting a timeout or retry policy.
+
 Done when the proposed behavior states the maximum attempts, failure outcome, logging policy, and recovery behavior relevant to the finding.
 
 ## 4. Verify authorized fixes

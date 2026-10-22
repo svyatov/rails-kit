@@ -22,6 +22,8 @@ Done when the actual execution stack and job lifecycle are mapped, or unavailabl
 
 Read [reliability](references/reliability.md). Inspect argument serialization, record deletion, transaction timing, duplicate execution, partial progress, retry layers, discarded failures, and crash recovery. Follow each external side effect and deduplication key across attempts.
 
+Verify enqueue acceptance and failure reporting, including aborted callbacks, adapter exceptions, and deferred pushes. For Active Job changes, retain `ApplicationJob` and the existing adapter conventions; native processor APIs and extra infrastructure are not mandatory replacements.
+
 Distinguish durable enqueue, execution timing, duplicate execution, and eventual successful completion. None follows automatically from the others. Use isolated fixtures, local test backends, or approved staging; do not drain, replay, or kill production jobs as an audit step.
 
 Done when failure paths and claimed delivery guarantees are tied to code and the installed backend's documented behavior.

@@ -10,6 +10,8 @@ compatibility: Requires a Rails application, Ruby, Bundler, and a runnable test 
 
 Find and remove repeated work while preserving what the tests prove. This is an original workflow extracted from the Evil Martians case study, with API details checked against TestProf documentation. See [sources and coverage](references/sources.md).
 
+Keep the application's existing test runner, native fixtures, and Rails isolation conventions. TestProf helpers are targeted options after profiling, not a reason to migrate Minitest to RSpec, replace working fixtures, or weaken model behavior. For a profile-only request, stop with measurements and proposed fixes instead of changing tests or dependencies.
+
 ## 1. Establish a comparable baseline
 
 Read the application's instructions, test runner, helpers, factory definitions, database configuration, CI commands, and locked gem versions. Identify the requested scope and existing profiling tools before changing dependencies. Confirm that the test process uses its intended test databases, including each worker's database.

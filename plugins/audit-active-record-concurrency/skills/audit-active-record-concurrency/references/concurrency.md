@@ -4,11 +4,13 @@
 
 Use the application's runner and a disposable database. Commit setup data before opening competing connections. Size the connection pool for all participants. Coordinate the vulnerable read phase with queues or barriers rather than hoping a sleep causes overlap; use bounded waits and join threads so failures cannot hang the suite. Use `Thread#value` or equivalent to propagate thread exceptions.
 
+Wrap application code in each manually created thread with `Rails.application.executor.wrap`, and check out that worker's connection inside the wrapper. Use the Executor, not the Reloader, in child threads. It manages Rails execution state, query-cache lifetime, and connection cleanup. If an executor-wrapped parent waits for workers in development, follow the installed Rails threading guide's interlock guidance to avoid blocking autoloading.
+
 Do not share an Active Record instance or connection between participants. Reload results through a fresh query after the writers finish. Retain a deterministic regression if the test framework can support it; otherwise preserve the reproduction command and state the nondeterminism.
 
 ## Duplicate creation
 
-`validates :key, uniqueness: ...` performs a query and is not a database uniqueness constraint. `find_or_create_by!` can race between lookup and insert. Verify the installed implementation, unique index, and actual conflict handling together.
+`validates :key, uniqueness: ...` performs a query and is not a database uniqueness constraint. Current Rails delegates a missed `find_or_create_by!` lookup to `create_or_find_by!`, including database conflict recovery. The lookup and insert still allow interleaving; do not report the method name alone as a defect. Verify the installed implementation, unique index, and actual conflict handling together.
 
 `create_or_find_by!` relies on a matching database uniqueness constraint and uses a savepoint to handle an insert conflict. It still has an insert/delete/select race. If only some supplied attributes are constrained, its fallback lookup can fail because it searches using all supplied attributes. A uniqueness validator may stop the insert before the database conflict path is reached.
 

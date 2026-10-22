@@ -16,6 +16,10 @@ Inspect nested arrays/objects, key transforms, enum values, numeric/string IDs, 
 
 Parameter metadata does not establish validation. Send malformed and missing inputs through actual requests. Assert the resulting status and error shape; include authentication and authorization cases. Sensitive fields excluded for one role must stay excluded when serializers are reused elsewhere.
 
+Before mass assigning request parameters to a model, require an explicit Strong Parameters allowlist using `params.expect` where supported or the application's established `require`/`permit` pattern. Inspect `permit!` and empty-hash permits for unintended privileged fields. Parameter filtering protects assignment and shape; it is not domain validation or resource authorization. Test that extra or privileged attributes cannot change protected state.
+
+For cookie/session-authenticated endpoints, preserve CSRF protections on state-changing requests. A JSON response or request is not a reason to disable them. Distinguish APIs authenticated only by explicitly supplied credentials from endpoints accepting ambient session credentials. Keep GET free of state-changing operations and test the authentication-specific protection rather than imposing one CSRF configuration on every API.
+
 ## Rswag and Typelizer, when installed
 
 Rswag's `run_test!` defines a request example and response validation. Its generation task can run in dry-run mode, producing documentation without executing requests. Confirm real examples ran by using the project's ordinary request-spec command and inspecting example counts/results.

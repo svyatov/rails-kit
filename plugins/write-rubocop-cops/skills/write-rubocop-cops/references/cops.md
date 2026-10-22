@@ -28,6 +28,8 @@ Set `Safe` and `SafeAutoCorrect` according to the actual proof and the project's
 
 Use target Ruby and gem constraints supported by the installed RuboCop API, such as `minimum_target_ruby_version` or `requires_gem`. Lockfile-based gates need the relevant gem information. Do not use the linter process's `RUBY_VERSION` or loaded application constants as a substitute for target metadata.
 
+Honor explicit `AllCops` target settings, including `TargetRubyVersion` and `TargetRailsVersion` for Rails-specific rules, before inferred lockfile versions. Check the installed API for honoring those settings. A rule that forbids a supported Rails idiom requires an explicit project policy; it is not a framework best-practice check by default.
+
 For a repository-local rule, `.rubocop.yml` can still load custom files through `require`. Preserve that structure if it already works. For a distributable extension, use the plugin API and its supported packaging when the intended RuboCop range permits it. The plugin system was introduced in RuboCop 1.72; it does not make local `require` loading obsolete.
 
 Prefer the current public configuration mechanism over historical `Inject.defaults!` examples. Add dependencies only when justified, after checking upstream identity, supported versions, and published installation instructions. A single local rule does not inherently require a new gem or generator.

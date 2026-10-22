@@ -32,6 +32,8 @@ For each finding, give the location, failure sequence, persisted and external ef
 
 Use public APIs compatible with the installed Rails version. Preserve intended partial-success behavior. A longer transaction, wider rescue, or generic retry can change business semantics; justify the boundary before changing it.
 
+Preserve legitimate Active Record callbacks. When callback code updates the same record, check for recursive saves and use assignment in the appropriate before callback where applicable. Move external effects to a suitable commit boundary without declaring all model callbacks an anti-pattern.
+
 Done when the report explains both the correction and the remaining failure window. Deferring an effect until commit orders it correctly but does not guarantee its delivery.
 
 ## 4. Verify authorized fixes

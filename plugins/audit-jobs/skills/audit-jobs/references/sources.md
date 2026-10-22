@@ -4,6 +4,7 @@ Original Rails Kit instructions, checked 2026-10-23. These instructions are MIT 
 
 - [Fair by design: orchestrating background jobs in Ruby](https://evilmartians.com/chronicles/fair-by-design-orchestrating-background-jobs-in-ruby), Alexander Baygeldin and Travis Turner, Evil Martians, 2026: tenant latency, sharding, resumable work, throttling, and scheduler tradeoffs. The article's scheduler preference is not a default recommendation for all applications.
 - [Active Job Basics](https://guides.rubyonrails.org/active_job_basics.html): serialization, GlobalID, retry/discard handling, transaction timing, continuations, and backend distinctions.
+- [Rails 8.1.4 enqueue implementation](https://github.com/rails/rails/blob/v8.1.4/activejob/lib/active_job/enqueuing.rb) and [Solid Queue 1.7.0 enqueue errors](https://github.com/rails/solid_queue/blob/v1.7.0/README.md#errors-when-enqueuing): rejected, failed, and deferred enqueue outcomes. These versioned sources establish the reviewed behavior, not a required minimum version.
 - [Solid Queue](https://github.com/rails/solid_queue): transaction coupling, concurrency limits, failures, scheduling, and recovery. Confirm configuration and installed version before claiming support.
 - [Sidekiq Best Practices](https://github.com/sidekiq/sidekiq/wiki/Best-Practices): native JSON arguments, idempotency, and concurrent execution.
 - [Sidekiq Reliability](https://github.com/sidekiq/sidekiq/wiki/Reliability): open-source fetch loss window and commercial recovery behavior.

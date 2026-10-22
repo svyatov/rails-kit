@@ -32,6 +32,8 @@ For each finding, report the location, operation, input sizes, query counts, rep
 
 Choose loading, batching, or an aggregate based on required behavior. Preserve row filtering, authorization, ordering, pagination, and missing-association semantics. Avoid replacing N+1 queries with a join that duplicates records or loading an unbounded graph into memory.
 
+Prefer Rails' documented loading APIs and the application's existing loader. Treat strict loading as a targeted diagnostic or regression control; do not enable it globally or replace the query layer as an incidental audit fix.
+
 Done when every proposed fix explains both the reduced queries and how result semantics will remain intact.
 
 ## 4. Verify authorized fixes

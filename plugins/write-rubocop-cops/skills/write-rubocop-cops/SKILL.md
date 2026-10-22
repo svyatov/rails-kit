@@ -12,7 +12,9 @@ Turn an explicit Ruby or Rails convention into a narrow, tested static-analysis 
 
 ## 1. Define the rule
 
-Read the convention, relevant code, existing cops/configuration, Gemfile.lock, and tests. Check whether an existing built-in or installed extension cop already covers it before creating another.
+Read the convention, relevant code, existing cops/configuration, Gemfile.lock, and tests. Check whether an existing built-in or installed extension cop, including RuboCop Rails, already covers it before creating another.
+
+Validate a Rails/Ruby rule against official guidance for the target versions before enforcing it. Preserve supported framework idioms; label a stricter project preference as a project preference. If a requested rule conflicts with framework behavior or would weaken correctness, explain the conflict and resolve the rule's intent before implementing it.
 
 State which source forms are offenses and which are allowed. Separate a syntactic rule from assumptions about receiver types or runtime behavior. Resolve a missing policy decision before enforcing it across a codebase.
 
