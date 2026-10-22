@@ -34,10 +34,6 @@ To install from a local checkout, run these commands from its root and replace `
 
 Each `plugins/<name>/` directory contains a plugin manifest and `skills/<name>/SKILL.md`, with supporting references where needed. `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` expose the same plugins to Claude Code and Codex.
 
-## Origin
-
-The first skill, `hyperdrive`, was copied from `rails-hyperdrive` on the `feat/rails-hyperdrive-skill` branch of [Agent Toolkit](https://github.com/svyatov/agent-toolkit), commit `3edcfa830c1c038dc2691746d27542fd6fbf63f2`. Rails Kit renamed the skill, added legacy-preference migration guidance, and updated its documentation links. Plugin repository links and marketplace metadata identify Rails Kit.
-
 ## License
 
 [MIT](LICENSE)
