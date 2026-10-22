@@ -99,6 +99,17 @@
         "ruby",
         "development"
       ]
+    },
+    {
+      "name": "audit-jobs",
+      "source": "./plugins/audit-jobs",
+      "description": "Audit Ruby and Rails jobs for retries, duplicate effects, delivery gaps, transaction timing, concurrency, and tenant fairness.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
     }
   ]
 }
