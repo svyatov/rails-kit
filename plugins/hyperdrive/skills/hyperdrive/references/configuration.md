@@ -19,7 +19,7 @@ Hyperdrive does not generate Codex configuration. Merge an entry into the Rails 
 url = "http://127.0.0.1:3000/_hyperdrive/mcp"
 ```
 
-Project configuration requires a trusted project. Reconnect the client and inspect its active MCP tools. Prefer project configuration for this app; a global server entry can point other projects at the wrong running application. See [official MCP configuration](https://developers.openai.com/codex/mcp).
+Project configuration requires a trusted project. Reconnect the client and inspect its active MCP tools. Prefer project configuration for this app; a global server entry can point other projects at the wrong running application. See [official MCP configuration](https://learn.chatgpt.com/docs/extend/mcp.md?surface=cli).
 
 The generated `.claude/` agents, slash commands, and `CLAUDE.md` imports are not native Codex registrations. For portable companion content, add a concise pointer in the existing `AGENTS.md` naming the installed skill path and when to read it, including its referenced workflows. Verify it by loading the skill from that path. This provides explicit file-based use, not automatic skill discovery or Claude agent/command registration. If native discovery is required, use the current host-supported project skill location with one maintained copy or supported link, and verify discovery separately.
 
@@ -53,6 +53,8 @@ enabled: []
 `disabled` contains artifact names, not paths. Disabling removes only unedited installed files; inspect reported modified leftovers. `enabled` contains names of already bundled gems whose top-level `skills/` content should be adopted despite lacking native Hyperdrive metadata. Review that content before opting in. Preserve the other config keys. `.hyperdrive/lock.yml` is engine-managed provenance, not a settings file.
 
 ## Updates
+
+Before updating an older installation, inspect `.hyperdrive/lock.yml` for legacy `disabled` or `enabled` settings. Migrate them into `.hyperdrive/config.yml` before changing the bundle or running init/sync. Preserve existing settings and unrelated config keys; combine compatible lists without duplicates. If the two files express conflicting choices, resolve the intended settings with the user first. Current releases ignore the old keys and remove them when rewriting the lock. Leave lock bookkeeping to Hyperdrive. A fresh setup or an installation with preferences only in `config.yml` needs no migration.
 
 1. After an authorized gem change, preview `bin/rails hyperdrive:sync --dry-run`, then run `bin/rails hyperdrive:sync`. The Bundler plugin only adds missing artifacts; it defers rewrites and removals, and does not run in CI, frozen bundles, or non-development environments. A successful bundle is not evidence that all content is current.
 2. Review the diff, untracked files, skipped artifacts, and guideline import chain. Check for new references, stale content, and path collisions. Sync updates untouched files and preserves local edits. Keep deliberate removals from `CLAUDE.md` and the guideline index; sync respects them.

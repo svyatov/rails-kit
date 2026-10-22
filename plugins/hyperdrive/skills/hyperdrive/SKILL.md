@@ -15,6 +15,8 @@ This is an original setup workflow based on the Evil Martians article and checke
 
 Locate the Rails root and read its instructions, `Gemfile`, `Gemfile.lock`, Ruby version, routes, development launcher, and git status. Inspect existing `.mcp.json`, `.hyperdrive/`, `.claude/`, `.codex/config.toml`, and agent instruction files before changing them. If no Rails application can be identified, ask for its path.
 
+For an existing installation, check for legacy content preferences and follow the migration in [configuration and updates](references/configuration.md#updates) before changing the bundle or running init/sync.
+
 Identify the agent host, requested setup mode, development URL, and companions already installed through gems or plugins. Reuse existing choices. Ask only for decisions the repository and request do not establish. Avoid duplicate Layered Rails installations through both a plugin and Hyperdrive.
 
 Check the current [upstream README](https://github.com/rails-hyperdrive/rails-hyperdrive) and gemspec before installation. The recorded baseline requires Ruby 3.2+ and Rails 7.2+; confirm the chosen release's requirements. If the app is incompatible, report the mismatch instead of upgrading Rails or Ruby as part of setup.
