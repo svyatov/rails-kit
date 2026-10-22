@@ -4,6 +4,7 @@
 
 ### Changed
 
+- Use Markdown article sources in the seven audit and cop-authoring skills to reduce retrieval overhead.
 - Strengthen current Rails conventions in every workflow, including Executor-wrapped concurrency tests, enqueue-failure checks, Strong Parameters and CSRF protection, native test isolation, and version-aware cop policies.
 - Require explicit invocation for every skill in Claude Code and Codex, with matching human-facing descriptions and invocation examples.
 - Enforce explicit invocation and skill packaging contracts with a dependency-free Ruby validator in CI.
