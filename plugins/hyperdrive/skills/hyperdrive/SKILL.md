@@ -1,13 +1,16 @@
 ---
 name: hyperdrive
-description: 'Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync.'
+description: "Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires a Rails application, Ruby, Bundler, git, and network access for upstream checks and gem installation. MCP verification requires a local development server and an MCP client.
 ---
 
 # Rails Hyperdrive
 
 Configure an existing Rails application for agent development with Rails Hyperdrive. The default full setup includes the engine, the article's `layered-rails-skills` companion, and a working connection from the user's agent. Respect requests for MCP-only, content-only, or another companion. Creating an application, changing its architecture, and publishing companion gems are separate tasks.
+
+Preserve the application's Rails layout, autoloading, environment configuration, and established generator conventions. Companion architecture guidance is optional project policy, not official Rails policy: installing it does not authorize restructuring the application. Resolve any conflict with the installed Rails version's documented behavior before applying companion advice.
 
 This is an original setup workflow based on the Evil Martians article and checked against upstream documentation. See [sources and version baseline](references/sources.md). Read [configuration and updates](references/configuration.md) when selecting a host, customizing settings, or maintaining an existing installation.
 

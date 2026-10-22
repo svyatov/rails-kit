@@ -1,13 +1,16 @@
 ---
 name: test-performance
-description: 'Profile and reduce Rails test-suite runtime with TestProf: identify bottlenecks, remove factory cascades, isolate optional side effects, and reuse test data safely. Use for slow Rails tests or CI test jobs.'
+description: "Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires a Rails application, Ruby, Bundler, and a runnable test database. Examples use RSpec and FactoryBot; check TestProf support for other runners and factory libraries.
 ---
 
 # Rails test performance
 
 Find and remove repeated work while preserving what the tests prove. This is an original workflow extracted from the Evil Martians case study, with API details checked against TestProf documentation. See [sources and coverage](references/sources.md).
+
+Keep the application's existing test runner, native fixtures, and Rails isolation conventions. TestProf helpers are targeted options after profiling, not a reason to migrate Minitest to RSpec, replace working fixtures, or weaken model behavior. For a profile-only request, stop with measurements and proposed fixes instead of changing tests or dependencies.
 
 ## 1. Establish a comparable baseline
 

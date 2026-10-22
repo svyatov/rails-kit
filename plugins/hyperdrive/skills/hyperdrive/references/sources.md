@@ -9,3 +9,5 @@ Checked 2026-10-23. This is an original workflow, not an imported upstream skill
 - [OpenAI MCP documentation](https://learn.chatgpt.com/docs/extend/mcp.md?surface=cli): project-scoped `.codex/config.toml`, trusted-project requirement, and Streamable HTTP `url` configuration.
 
 The Codex instruction-file pointer and verification sequence are adaptations in this skill. They do not claim that Hyperdrive installs native Codex skills or agents.
+
+The conventions review also checked the current upstream README and installer alongside [Rails autoloading and reloading](https://guides.rubyonrails.org/autoloading_and_reloading_constants.html) and [configuration](https://guides.rubyonrails.org/configuring.html). Keep development tooling development-only and treat companion architecture choices as optional. Official documentation for the installed framework takes precedence over article examples or companion preferences.

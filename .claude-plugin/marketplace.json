@@ -33,6 +33,83 @@
         "test-prof",
         "rspec"
       ]
+    },
+    {
+      "name": "audit-active-record-concurrency",
+      "source": "./plugins/audit-active-record-concurrency",
+      "description": "Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
+    },
+    {
+      "name": "audit-n-plus-one",
+      "source": "./plugins/audit-n-plus-one",
+      "description": "Audit Rails query growth, locate N+1 queries, and verify loading or batching fixes with regression coverage.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
+    },
+    {
+      "name": "audit-transactions",
+      "source": "./plugins/audit-transactions",
+      "description": "Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
+    },
+    {
+      "name": "audit-http-clients",
+      "source": "./plugins/audit-http-clients",
+      "description": "Audit outbound Ruby HTTP clients for timeout budgets, retry safety, error handling, secret leakage, and failure isolation.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
+    },
+    {
+      "name": "audit-api-contracts",
+      "source": "./plugins/audit-api-contracts",
+      "description": "Audit Rails API contracts against request behavior, serializers, OpenAPI schemas, and compatibility requirements.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
+    },
+    {
+      "name": "write-rubocop-cops",
+      "source": "./plugins/write-rubocop-cops",
+      "description": "Write and test custom RuboCop cops for Ruby and Rails conventions, with version-aware rules and safe autocorrection.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "development"
+      ]
+    },
+    {
+      "name": "audit-jobs",
+      "source": "./plugins/audit-jobs",
+      "description": "Audit Ruby and Rails jobs for retries, duplicate effects, delivery gaps, transaction timing, concurrency, and tenant fairness.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
     }
   ]
 }
