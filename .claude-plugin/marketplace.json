@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
-  "name": "svyatov-rails-kit",
+  "name": "rails-kit",
   "description": "Rails-related skills for Claude Code and Codex",
   "owner": {
     "name": "Leonid Svyatov",

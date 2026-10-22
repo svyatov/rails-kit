@@ -16,14 +16,14 @@ Register the marketplace and install the skill with your agent's CLI.
 
 ```sh
 claude plugin marketplace add svyatov/rails-kit
-claude plugin install hyperdrive@svyatov-rails-kit
+claude plugin install hyperdrive@rails-kit
 ```
 
 ### Codex
 
 ```sh
 codex plugin marketplace add svyatov/rails-kit
-codex plugin add hyperdrive@svyatov-rails-kit
+codex plugin add hyperdrive@rails-kit
 ```
 
 After installation, ask your agent to set up or maintain Rails Hyperdrive in a Rails application. The skill includes host-specific configuration and verification steps.
