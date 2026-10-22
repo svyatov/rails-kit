@@ -1,7 +1,8 @@
 ---
 name: test-performance
-description: 'Profile and reduce Rails test-suite runtime with TestProf: identify bottlenecks, remove factory cascades, isolate optional side effects, and reuse test data safely. Use for slow Rails tests or CI test jobs.'
+description: "Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires a Rails application, Ruby, Bundler, and a runnable test database. Examples use RSpec and FactoryBot; check TestProf support for other runners and factory libraries.
 ---
 

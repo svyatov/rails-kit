@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+### Changed
+
+- Require explicit invocation for every skill in Claude Code and Codex, with matching human-facing descriptions and invocation examples.
+- Enforce explicit invocation and skill packaging contracts with a dependency-free Ruby validator in CI.
+
 ### Added
 
 - Add `audit-jobs` 1.0.0: Audit Ruby and Rails jobs for retries, duplicate effects, delivery gaps, transaction timing, concurrency, and tenant fairness.

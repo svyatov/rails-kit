@@ -1,7 +1,8 @@
 ---
 name: write-rubocop-cops
-description: 'Create or update custom RuboCop cops for Ruby or Rails conventions, with offense tests, version constraints, and safe autocorrection. Use when implementing an enforceable static-analysis rule.'
+description: "Write and test custom RuboCop cops for Ruby and Rails conventions, with version-aware rules and safe autocorrection."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires a Ruby project using RuboCop. Use its locked RuboCop, parser, extension packaging, and test framework.
 ---
 

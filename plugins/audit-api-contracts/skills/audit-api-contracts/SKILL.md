@@ -1,7 +1,8 @@
 ---
 name: audit-api-contracts
-description: 'Audit Rails API contracts against routes, request specs, serializers, and OpenAPI schemas. Use for response mismatches, undocumented errors, schema drift, or compatibility checks.'
+description: "Audit Rails API contracts against request behavior, serializers, OpenAPI schemas, and compatibility requirements."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires a Rails API or its source artifacts. Use the installed serializer, schema generator, validator, and test runner; no particular OpenAPI tool is required.
 ---
 

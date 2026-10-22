@@ -1,7 +1,8 @@
 ---
 name: audit-n-plus-one
-description: 'Audit Rails requests, serializers, and services for N+1 queries by measuring query growth as data grows. Use for repeated SQL, slow collection rendering, or N+1 regression coverage.'
+description: "Audit Rails query growth, locate N+1 queries, and verify loading or batching fixes with regression coverage."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires Ruby and a runnable application or SQL trace. Regression examples cover Rails with RSpec or Minitest; use the project database and test runner.
 ---
 

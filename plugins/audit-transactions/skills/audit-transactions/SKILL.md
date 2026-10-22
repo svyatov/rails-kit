@@ -1,7 +1,8 @@
 ---
 name: audit-transactions
-description: 'Audit Rails transaction boundaries, exception handling, nested transactions, and external side effects. Use when reviewing rollback behavior, rescued database errors, or work that must wait for commit.'
+description: "Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires Active Record. Public per-transaction callbacks require Rails 7.2 or newer; inspect the installed version and database connections.
 ---
 

@@ -1,7 +1,8 @@
 ---
 name: audit-http-clients
-description: 'Audit outbound Ruby HTTP integrations for timeouts, unsafe retries, error handling, secret leakage, and failure isolation. Use when reviewing or diagnosing Rails or Ruby service clients.'
+description: "Audit outbound Ruby HTTP clients for timeout budgets, retry safety, error handling, secret leakage, and failure isolation."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires a Ruby application. Inspect its installed transport, middleware, and job retry layers; no particular HTTP client or circuit breaker is required.
 ---
 

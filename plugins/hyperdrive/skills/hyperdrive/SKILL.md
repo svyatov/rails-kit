@@ -1,7 +1,8 @@
 ---
 name: hyperdrive
-description: 'Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync.'
+description: "Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires a Rails application, Ruby, Bundler, git, and network access for upstream checks and gem installation. MCP verification requires a local development server and an MCP client.
 ---
 

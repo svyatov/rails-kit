@@ -1,7 +1,8 @@
 ---
 name: audit-active-record-concurrency
-description: 'Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants. Use when reviewing write races, uniqueness enforcement, atomic creation, or locking in Rails.'
+description: "Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires an Active Record application. Reproduction needs an isolated test database using the relevant database adapter and separate connections.
 ---
 

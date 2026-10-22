@@ -1,6 +1,6 @@
 # Rails Kit
 
-Rails-related skills for Claude Code and Codex. Each skill is an individually installable plugin.
+Rails-related skills for Claude Code and Codex. Each skill is an individually installable plugin. All skills require explicit invocation; none is selected automatically.
 
 ## Skills
 
@@ -34,15 +34,17 @@ codex plugin marketplace add svyatov/rails-kit
 codex plugin add hyperdrive@rails-kit
 ```
 
-After installation, ask your agent to set up or maintain Rails Hyperdrive in a Rails application. The skill includes host-specific configuration and verification steps.
+After installation, invoke `/hyperdrive:hyperdrive` in Claude Code or `$hyperdrive` in Codex, followed by your request. For another plugin, replace the name in the install command and invocation. For example, invoke `/audit-jobs:audit-jobs` or `$audit-jobs` to audit background jobs. Audits report findings first and apply fixes only when your request authorizes them.
 
-To install the test optimization skill, replace `hyperdrive@rails-kit` with `test-performance@rails-kit` in the install command. Ask the agent to profile and speed up the application's test suite. Its guides cover all optimization techniques from the [Evil Martians case study](https://evilmartians.com/chronicles/railing-against-time-tools-and-techniques-that-got-us-5x-faster-results), with measured verification and test-isolation checks.
+To install the test optimization skill, replace `hyperdrive@rails-kit` with `test-performance@rails-kit` in the install command. Invoke `/test-performance:test-performance` or `$test-performance` to profile and speed up the application's test suite. Its guides cover all optimization techniques from the [Evil Martians case study](https://evilmartians.com/chronicles/railing-against-time-tools-and-techniques-that-got-us-5x-faster-results), with measured verification and test-isolation checks.
 
 To install from a local checkout, run these commands from its root and replace `svyatov/rails-kit` with `.` in the marketplace command.
 
 ## Structure
 
 Each `plugins/<name>/` directory contains a plugin manifest and `skills/<name>/SKILL.md`, with supporting references where needed. `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` expose the same plugins to Claude Code and Codex.
+
+Run `ruby scripts/validate.rb` to check invocation policy, catalog consistency, frontmatter, descriptions, and local references. CI runs this check before host-specific plugin validation.
 
 ## License
 

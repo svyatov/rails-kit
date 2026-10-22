@@ -1,7 +1,8 @@
 ---
 name: audit-jobs
-description: 'Audit Rails and Ruby background jobs for unsafe retries, duplicate effects, serialization, enqueue timing, delivery gaps, concurrency, and tenant starvation. Use when reviewing job reliability or queue behavior.'
+description: "Audit Ruby and Rails jobs for retries, duplicate effects, delivery gaps, transaction timing, concurrency, and tenant fairness."
 license: MIT
+disable-model-invocation: true
 compatibility: Requires a Ruby job implementation or Rails Active Job application. Detect the installed processor, adapter, edition, storage, and runtime configuration before applying backend-specific guidance.
 ---
 
