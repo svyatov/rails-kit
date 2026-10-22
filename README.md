@@ -13,6 +13,7 @@ Rails-related skills for Claude Code and Codex. Each skill is an individually in
 | [audit-transactions](plugins/audit-transactions/skills/audit-transactions/SKILL.md) | Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects. |
 | [audit-http-clients](plugins/audit-http-clients/skills/audit-http-clients/SKILL.md) | Audit outbound Ruby HTTP clients for timeout budgets, retry safety, error handling, secret leakage, and failure isolation. |
 | [audit-api-contracts](plugins/audit-api-contracts/skills/audit-api-contracts/SKILL.md) | Audit Rails API contracts against request behavior, serializers, OpenAPI schemas, and compatibility requirements. |
+| [write-rubocop-cops](plugins/write-rubocop-cops/skills/write-rubocop-cops/SKILL.md) | Write and test custom RuboCop cops for Ruby and Rails conventions, with version-aware rules and safe autocorrection. |
 
 ## Installation
 

@@ -88,6 +88,17 @@
         "ruby",
         "audit"
       ]
+    },
+    {
+      "name": "write-rubocop-cops",
+      "source": "./plugins/write-rubocop-cops",
+      "description": "Write and test custom RuboCop cops for Ruby and Rails conventions, with version-aware rules and safe autocorrection.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "development"
+      ]
     }
   ]
 }

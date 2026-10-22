@@ -87,6 +87,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "web"
+    },
+    {
+      "name": "write-rubocop-cops",
+      "source": {
+        "source": "local",
+        "path": "./plugins/write-rubocop-cops"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "web"
     }
   ]
 }
