@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "svyatov-rails-kit",
+  "description": "Rails-related skills for Claude Code and Codex",
+  "owner": {
+    "name": "Leonid Svyatov",
+    "email": "leonid@svyatov.com",
+    "url": "https://www.svyatov.com"
+  },
+  "plugins": [
+    {
+      "name": "hyperdrive",
+      "source": "./plugins/hyperdrive",
+      "description": "Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "hyperdrive",
+        "mcp",
+        "setup",
+        "skills"
+      ]
+    }
+  ]
+}

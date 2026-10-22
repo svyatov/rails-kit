@@ -1,0 +1,20 @@
+{
+  "name": "svyatov-rails-kit",
+  "interface": {
+    "displayName": "Rails Kit"
+  },
+  "plugins": [
+    {
+      "name": "hyperdrive",
+      "source": {
+        "source": "local",
+        "path": "./plugins/hyperdrive"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "web"
+    }
+  ]
+}

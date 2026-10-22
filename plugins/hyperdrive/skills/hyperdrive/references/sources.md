@@ -1,0 +1,11 @@
+# Sources and version baseline
+
+Checked 2026-10-23. This is an original workflow, not an imported upstream skill or a copy of the article. Installation, configuration, and safety details come from the project documentation below. Recheck current upstream instructions before dependency changes; prefer the installed release's help for command flags.
+
+- [Evil Martians article](https://evilmartians.com/chronicles/rails-hyperdrive-supercharged-agentic-development-for-rails), Albert Pazderin and Travis Turner, September 15, 2026: motivation and the full setup with the Layered Rails companion. [Markdown version](https://evilmartians.com/chronicles/rails-hyperdrive-supercharged-agentic-development-for-rails.md).
+- [Rails Hyperdrive README](https://github.com/rails-hyperdrive/rails-hyperdrive/blob/92b0781fc4cd439014513b7e493d2f7bf11ddc67/README.md), [gemspec](https://github.com/rails-hyperdrive/rails-hyperdrive/blob/92b0781fc4cd439014513b7e493d2f7bf11ddc67/rails-hyperdrive.gemspec), and [init generator](https://github.com/rails-hyperdrive/rails-hyperdrive/blob/92b0781fc4cd439014513b7e493d2f7bf11ddc67/lib/generators/hyperdrive/install/install_generator.rb): version 0.10.1; Ruby 3.2+, Rails 7.2+, bootstrap behavior, content preferences, sync, and resources.
+- [Hyperdrive security model](https://github.com/rails-hyperdrive/rails-hyperdrive/blob/92b0781fc4cd439014513b7e493d2f7bf11ddc67/SECURITY.md): unauthenticated local development access, Ruby execution, and the limits of SQL and origin guards.
+- [Layered Rails README](https://github.com/palkan/layered-rails-skills/blob/8fb4b26b674dc01612d582f0328bc6cf9bb0ce85/README.md) and [gemspec](https://github.com/palkan/layered-rails-skills/blob/8fb4b26b674dc01612d582f0328bc6cf9bb0ce85/layered-rails-skills.gemspec): development-group installation, Hyperdrive 0.8+ integration, bundle-dependent references, and host-specific entry points.
+- [OpenAI MCP documentation](https://developers.openai.com/codex/mcp): project-scoped `.codex/config.toml`, trusted-project requirement, and Streamable HTTP `url` configuration.
+
+The Codex instruction-file pointer and verification sequence are adaptations in this skill. They do not claim that Hyperdrive installs native Codex skills or agents.
