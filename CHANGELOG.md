@@ -4,6 +4,8 @@
 
 ### Added
 
+- Add `audit-api-contracts` 1.0.0: Audit Rails API contracts against request behavior, serializers, OpenAPI schemas, and compatibility requirements.
+
 - Add `audit-http-clients` 1.0.0: Audit outbound Ruby HTTP clients for timeout budgets, retry safety, error handling, secret leakage, and failure isolation.
 
 - Add `audit-transactions` 1.0.0: Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects.

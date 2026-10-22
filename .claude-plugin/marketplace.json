@@ -77,6 +77,17 @@
         "ruby",
         "audit"
       ]
+    },
+    {
+      "name": "audit-api-contracts",
+      "source": "./plugins/audit-api-contracts",
+      "description": "Audit Rails API contracts against request behavior, serializers, OpenAPI schemas, and compatibility requirements.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
     }
   ]
 }
