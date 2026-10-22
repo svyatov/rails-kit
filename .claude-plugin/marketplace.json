@@ -66,6 +66,17 @@
         "ruby",
         "audit"
       ]
+    },
+    {
+      "name": "audit-http-clients",
+      "source": "./plugins/audit-http-clients",
+      "description": "Audit outbound Ruby HTTP clients for timeout budgets, retry safety, error handling, secret leakage, and failure isolation.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "audit"
+      ]
     }
   ]
 }

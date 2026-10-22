@@ -63,6 +63,18 @@
         "authentication": "ON_INSTALL"
       },
       "category": "web"
+    },
+    {
+      "name": "audit-http-clients",
+      "source": {
+        "source": "local",
+        "path": "./plugins/audit-http-clients"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "web"
     }
   ]
 }

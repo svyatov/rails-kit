@@ -11,6 +11,7 @@ Rails-related skills for Claude Code and Codex. Each skill is an individually in
 | [audit-active-record-concurrency](plugins/audit-active-record-concurrency/skills/audit-active-record-concurrency/SKILL.md) | Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants. |
 | [audit-n-plus-one](plugins/audit-n-plus-one/skills/audit-n-plus-one/SKILL.md) | Audit Rails query growth, locate N+1 queries, and verify loading or batching fixes with regression coverage. |
 | [audit-transactions](plugins/audit-transactions/skills/audit-transactions/SKILL.md) | Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects. |
+| [audit-http-clients](plugins/audit-http-clients/skills/audit-http-clients/SKILL.md) | Audit outbound Ruby HTTP clients for timeout budgets, retry safety, error handling, secret leakage, and failure isolation. |
 
 ## Installation
 
