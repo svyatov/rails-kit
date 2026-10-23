@@ -36,6 +36,8 @@
 
 ### Fixed
 
+- Pin validation CI to Ubuntu 24.04 and configure Git's initial branch before checkout to remove runner-migration notices and default-branch hints.
+
 - Add a shared Rails Kit icon to every plugin and validate its presence and dimensions to eliminate missing-icon warnings.
 
 - Align upgrade helper usage examples with the installed skill layout and current pattern coverage.
