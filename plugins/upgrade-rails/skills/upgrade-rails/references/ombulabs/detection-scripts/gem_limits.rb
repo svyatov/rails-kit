@@ -5,7 +5,8 @@
 # no network, no next_rails, no bundle install. Runs with the app's Ruby:
 # stdlib only, Ruby 2.1 compatible.
 #
-#   ruby <skill>/detection-scripts/gem_limits.rb [--target 4.2] [--lockfile Gemfile.next.lock]
+# <skill-dir> is the installed upgrade-rails skill directory.
+#   ruby <skill-dir>/references/ombulabs/detection-scripts/gem_limits.rb [--target 4.2] [--lockfile Gemfile.next.lock]
 #
 # Only limits on the Rails framework gems count. A gem only the framework pulls
 # in is skipped (the next rails resolves it), and a transitive gem names the

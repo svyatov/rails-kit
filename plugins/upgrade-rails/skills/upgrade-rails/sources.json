@@ -51,7 +51,8 @@
     "Merged three MIT-licensed source workflows into explicitly invoked upgrade-rails.",
     "Replaced duplicate tutorials, workflows, and source snapshots with concise operations, report templates, and official-source indexes.",
     "Curated the executable detector to 55 selected, source-backed candidates; see post_import_review for retired identifiers.",
-    "Preserved the original authors' license notices and pinned source revisions."
+    "Preserved the original authors' license notices and pinned source revisions.",
+    "Hardened report output and partial-coverage reporting, added failure-path regressions, and aligned helper usage comments with the installed layout."
   ],
   "source_link_redirects": [],
   "post_import_review": {

@@ -1,25 +1,23 @@
 # frozen_string_literal: true
 
 # Runs every detection pattern for one upgrade hop against a Rails app and
-# prints the findings as a table: same inputs, same output, every run. This is
-# the scripted form of Workflow 05 (detect breaking changes). It replaces the
-# per-pattern Grep loop, which drifts between sessions and silently skips
-# patterns when the list is long.
+# prints findings and coverage errors for repeatable upgrade assessments.
 #
 # Usage, from the app root:
 #
-#   ruby <skill>/detection-scripts/scan_patterns.rb             # hop from Gemfile.lock
-#   ruby <skill>/detection-scripts/scan_patterns.rb --target 7.0
-#   ruby <skill>/detection-scripts/scan_patterns.rb --patterns path/to/rails-70-patterns.yml
-#   ruby <skill>/detection-scripts/scan_patterns.rb --summary   # summary table only
-#   ruby <skill>/detection-scripts/scan_patterns.rb --only VAR1,VAR2   # detail for these patterns only
-#   ruby <skill>/detection-scripts/scan_patterns.rb --explain VAR1     # what a pattern means + its guide entry
-#   ruby <skill>/detection-scripts/scan_patterns.rb --format json --output tmp/pattern-scan.json
-#   ruby <skill>/detection-scripts/scan_patterns.rb --self-test
+# <skill-dir> is the installed upgrade-rails skill directory.
+#   ruby <skill-dir>/references/ombulabs/detection-scripts/scan_patterns.rb
+#   ruby <skill-dir>/references/ombulabs/detection-scripts/scan_patterns.rb --target 7.0
+#   ruby <skill-dir>/references/ombulabs/detection-scripts/scan_patterns.rb --patterns path/to/rails-70-patterns.yml
+#   ruby <skill-dir>/references/ombulabs/detection-scripts/scan_patterns.rb --summary
+#   ruby <skill-dir>/references/ombulabs/detection-scripts/scan_patterns.rb --only VAR1,VAR2
+#   ruby <skill-dir>/references/ombulabs/detection-scripts/scan_patterns.rb --explain VAR1
+#   ruby <skill-dir>/references/ombulabs/detection-scripts/scan_patterns.rb --format json --output tmp/pattern-scan.json
+#   ruby <skill-dir>/references/ombulabs/detection-scripts/scan_patterns.rb --self-test
 #
 # Without --target or --patterns, the current Rails version is read from the
 # app's Gemfile.lock and the target is the next hop in version-guides/
-# (4.0 -> 4.1). When that hop has no patterns file (6.0 -> 6.1), or no guide
+# (4.0 -> 4.1). When that hop has no bundled patterns, or no guide
 # starts at the current version (3.1), the script stops instead of scanning
 # another hop's patterns under the wrong label.
 #
