@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Upgrade Rails"
+  short_description: "Plan and verify incremental Rails upgrades"
 policy:
   allow_implicit_invocation: false

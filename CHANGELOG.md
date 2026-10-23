@@ -52,6 +52,8 @@
 
 ### Fixed
 
+- Show branded skill labels in Codex and the readable Rails Kit plugin name in Claude Code.
+
 - Check target deployment images before changing Ruby version pins, and run upgrade baselines under the explicitly selected source Ruby.
 
 - Pin validation CI to Ubuntu 24.04 and configure Git's initial branch before checkout to remove runner-migration notices and default-branch hints.

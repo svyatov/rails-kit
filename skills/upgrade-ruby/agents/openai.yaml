@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Upgrade Ruby"
+  short_description: "Plan and verify Ruby interpreter upgrades"
 policy:
   allow_implicit_invocation: false

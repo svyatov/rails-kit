@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Audit N+1"
+  short_description: "Find N+1 queries and verify loading fixes"
 policy:
   allow_implicit_invocation: false

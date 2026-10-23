@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Audit Jobs"
+  short_description: "Audit job retries, delivery, and duplicate effects"
 policy:
   allow_implicit_invocation: false

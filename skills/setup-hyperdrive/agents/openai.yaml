@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Setup Hyperdrive"
+  short_description: "Set up Rails Hyperdrive tools and MCP access"
 policy:
   allow_implicit_invocation: false

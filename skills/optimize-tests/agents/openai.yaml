@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Optimize Tests"
+  short_description: "Profile and speed up Rails test suites"
 policy:
   allow_implicit_invocation: false
