@@ -52,6 +52,8 @@
 
 ### Fixed
 
+- Check target deployment images before changing Ruby version pins, and run upgrade baselines under the explicitly selected source Ruby.
+
 - Pin validation CI to Ubuntu 24.04 and configure Git's initial branch before checkout to remove runner-migration notices and default-branch hints.
 
 - Add a shared Rails Kit icon to every plugin and validate its presence and dimensions to eliminate missing-icon warnings.
