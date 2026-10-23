@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Refresh the README with the Rails Kit logo, validation and agent badges, quick navigation, and installation-first usage examples.
+
 - Curate `upgrade-rails` to one set of 55 detection rules with official source links, concise hop notes, and shared report/operation references. Remove duplicate imports and correct job timing, serialization, fixture paths, association constraints, and adapter detection.
 
 - Use Markdown article sources in the seven audit and cop-authoring skills to reduce retrieval overhead.
@@ -12,6 +14,8 @@
 - Enforce explicit invocation and skill packaging contracts with a dependency-free Ruby validator in CI.
 
 ### Added
+
+- Add contribution guidance and issue and pull request templates for skill reports and proposals.
 
 - Add `upgrade-rails` 1.0.0: Merge the MIT-licensed Rails upgrade skills from [lucianghinda/superpowers-ruby](https://github.com/lucianghinda/superpowers-ruby), [ombulabs/claude-code_rails-upgrade-skill](https://github.com/ombulabs/claude-code_rails-upgrade-skill), and [maquina-app/rails-upgrade-skill](https://github.com/maquina-app/rails-upgrade-skill). Include version-aware assessments, configuration previews, incremental implementation, source provenance, and preserved supporting files.
 

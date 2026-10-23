@@ -1,0 +1,22 @@
+name: Skill proposal
+description: Suggest a new Rails or Ruby skill, or improve an existing workflow.
+body:
+  - type: textarea
+    id: task
+    attributes:
+      label: Task and current gap
+      description: What should the skill help with, and what do existing skills miss?
+    validations:
+      required: true
+  - type: textarea
+    id: workflow
+    attributes:
+      label: Proposed workflow and verification
+      description: Describe the expected result and how a user would verify it.
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Sources and applicable versions
+      description: Link official Rails or Ruby documentation and any source material to adapt. Note its license if applicable.
