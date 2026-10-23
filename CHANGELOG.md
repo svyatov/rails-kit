@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Harden `upgrade-ruby` with active-interpreter and Gemfile checks, version-specific Ruby/Bundler coverage, portable audit reports, and confirmed native-extension rebuilds. Cover compatibility edits in files without Ruby pins and common require syntax, and use available Markdown documentation sources.
+
 - Refresh the README with the Rails Kit logo, validation and agent badges, quick navigation, and installation-first usage examples.
 
 - Curate `upgrade-rails` to one set of 55 detection rules with official source links, concise hop notes, and shared report/operation references. Remove duplicate imports and correct job timing, serialization, fixture paths, association constraints, and adapter detection.
@@ -14,6 +16,8 @@
 - Enforce explicit invocation and skill packaging contracts with a dependency-free Ruby validator in CI.
 
 ### Added
+
+- Add `upgrade-ruby` 1.0.0: Import the Ruby interpreter upgrade workflow and Ruby 4.0 compatibility inventory from [lucianghinda/superpowers-ruby](https://github.com/lucianghinda/superpowers-ruby) (MIT), with explicit invocation, source provenance, and preserved license attribution.
 
 - Add contribution guidance and issue and pull request templates for skill reports and proposals.
 

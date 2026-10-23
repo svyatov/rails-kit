@@ -1,0 +1,55 @@
+{
+  "created_at": "2026-10-23T12:13:53.000Z",
+  "type": "copy",
+  "sources": [
+    {
+      "url": "https://github.com/lucianghinda/superpowers-ruby/tree/99fac3d8bee27bab20b23d4bef6fa634738a59e8/skills/ruby-upgrade",
+      "repository": "lucianghinda/superpowers-ruby",
+      "path": "skills/ruby-upgrade",
+      "branch": "main",
+      "sha": "99fac3d8bee27bab20b23d4bef6fa634738a59e8",
+      "original_name": "ruby-upgrade",
+      "fetched_at": "2026-10-23T12:13:53.000Z"
+    }
+  ],
+  "license": "MIT",
+  "copyright": "Copyright (c) 2025 Jesse Vincent",
+  "license_override": false,
+  "license_override_reason": null,
+  "adaptations": [
+    "Renamed ruby-upgrade to upgrade-ruby, including its heading, announcement, and internal path examples.",
+    "Added explicit invocation metadata, a human-facing description, and Rails Kit packaging.",
+    "Replaced unavailable upstream Rails upgrade routing with the local upgrade-rails skill and removed the unavailable verification skill reference while retaining its passing-output requirement.",
+    "Made current official Ruby documentation authoritative over the imported detection inventory.",
+    "Imported both upstream source files and preserved the upstream MIT notice; recorded the approved workflow and technical corrections below."
+  ],
+  "post_import_review": {
+    "reviewed_at": "2026-10-23",
+    "approved_findings": [
+      "R1",
+      "R2",
+      "R3",
+      "R4"
+    ],
+    "changes": {
+      "R1": "Handle explicit and file-backed Ruby constraints; verify the selected interpreter before lockfile updates and inside the bundle.",
+      "R2": "Scope the inventory to the actual version transition, include RubyGems/Bundler migration checks, and distinguish compatibility defects from optional changes.",
+      "R3": "Support a direct audit when subagents are unavailable and cite official sources with stable entry identifiers instead of assumed report paths.",
+      "R4": "Diagnose native-extension failures before proposing a confirmed, targeted restore or cache invalidation; remove automatic recursive deletion."
+    },
+    "official_sources": [
+      "https://www.ruby-lang.org/en/news/2025/12/25/ruby-4-0-0-released.md",
+      "https://guides.rubygems.org/gemfile_ruby.md",
+      "https://blog.rubygems.org/2025/12/03/upgrade-to-rubygems-bundler-4.html",
+      "https://guides.rubygems.org/command-reference/bundle-update/",
+      "https://guides.rubygems.org/command-reference/bundle-pristine/",
+      "https://docs.ruby-lang.org/en/4.0/syntax/comments_rdoc.html"
+    ],
+    "verification_fixes": {
+      "reviewed_at": "2026-10-23",
+      "F1": "Limit the existing-pin restriction to version-pin edits; permit confirmed compatibility changes in existing files without Ruby pins.",
+      "F2": "Inspect require arguments across quote styles, parentheses, and multiline calls; retain dynamic-require coverage gaps and bundle checks.",
+      "F3": "Use verified Markdown variants of the Ruby 4.0 release notes and Ruby directive documentation."
+    }
+  }
+}

@@ -122,6 +122,18 @@
         "upgrades",
         "compatibility"
       ]
+    },
+    {
+      "name": "upgrade-ruby",
+      "source": "./plugins/upgrade-ruby",
+      "description": "Assess and upgrade Ruby versions in Bundler and Rails applications with compatibility audits, toolchain updates, and verification.",
+      "category": "web",
+      "tags": [
+        "ruby",
+        "rails",
+        "upgrades",
+        "compatibility"
+      ]
     }
   ]
 }
