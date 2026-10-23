@@ -12,7 +12,7 @@ cd rails-kit
 ruby scripts/validate.rb
 ```
 
-Rails Kit is one plugin, with its manifest at `.claude-plugin/plugin.json`, icon at `.claude-plugin/icon.png`, and each skill at `skills/<name>/SKILL.md`. Supporting references belong beside the skill in `references/`. Both `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` register the repository root as `rails-kit`.
+Rails Kit is one plugin, with its manifest at `.claude-plugin/plugin.json`, icon at `assets/icon.png`, and each skill at `skills/<name>/SKILL.md`. Supporting references belong beside the skill in `references/`. Both `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` register the repository root as `rails-kit`.
 
 ## Skill requirements
 

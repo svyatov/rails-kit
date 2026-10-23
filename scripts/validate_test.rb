@@ -4,7 +4,7 @@ require "open3"
 require "tmpdir"
 
 validator = File.expand_path("validate.rb", __dir__)
-icon = File.expand_path("../.claude-plugin/icon.png", __dir__)
+icon = File.expand_path("../assets/icon.png", __dir__)
 cases = {
   "multiple skills in one plugin" => [nil, nil],
   "unresolved rename" => [->(root) {
@@ -68,8 +68,9 @@ cases.each do |name, (mutate, expected_error)|
       FileUtils.mkdir_p(File.dirname("#{root}/#{path}"))
       File.write("#{root}/#{path}", content)
     end
-    write.call(".claude-plugin/plugin.json", JSON.generate(name: "rails-kit", description: "Rails kit.", version: "1.0.0"))
-    FileUtils.cp(icon, "#{root}/.claude-plugin/icon.png")
+    write.call(".claude-plugin/plugin.json", JSON.generate(name: "rails-kit", description: "Rails kit.", version: "1.0.0", icon: "./assets/icon.png"))
+    FileUtils.mkdir_p("#{root}/assets")
+    FileUtils.cp(icon, "#{root}/assets/icon.png")
     write.call(".claude-plugin/marketplace.json", JSON.generate(name: "rails-kit", plugins: [{name: "rails-kit", description: "Rails kit.", source: "./"}], renames: {"legacy-audit" => "audit-before", "audit-before" => "rails-kit", "retired-audit" => nil}))
     write.call(".agents/plugins/marketplace.json", JSON.generate(name: "rails-kit", plugins: [{name: "rails-kit", source: {source: "local", path: "./"}, policy: {installation: "AVAILABLE", authentication: "ON_INSTALL"}}]))
     write.call("AGENTS.md", "Fixture\n")

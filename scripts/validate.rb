@@ -22,7 +22,7 @@ check(description.is_a?(String) && (1..1024).cover?(description.size), "#{manife
 check(manifest.fetch("version").match?(/\A\d+\.\d+\.\d+\z/), "#{manifest_path}: invalid version")
 check(Dir.glob("**/.claude-plugin/plugin.json").sort == [manifest_path], "Unexpected plugin manifests")
 
-icon = ".claude-plugin/icon.png"
+icon = manifest.fetch("icon")
 check(File.file?(icon), "#{name}: missing plugin icon")
 header = File.binread(icon, 24)
 check(header.start_with?("\x89PNG\r\n\x1a\n".b) && header.bytesize == 24, "#{icon}: invalid PNG header")
