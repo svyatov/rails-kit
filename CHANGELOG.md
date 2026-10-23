@@ -52,6 +52,8 @@
 
 ### Fixed
 
+- Detect changing benchmark inputs in dirty checkouts before accepting test optimization measurements.
+
 - Show branded skill labels in Codex and the readable Rails Kit plugin name in Claude Code.
 
 - Check target deployment images before changing Ruby version pins, and run upgrade baselines under the explicitly selected source Ruby.
