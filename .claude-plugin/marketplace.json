@@ -9,130 +9,16 @@
   },
   "plugins": [
     {
-      "name": "setup-hyperdrive",
-      "source": "./plugins/setup-hyperdrive",
-      "description": "Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync.",
+      "name": "rails-kit",
+      "source": "./",
+      "description": "Rails skills for Claude Code and Codex: audit applications, optimize tests, and plan upgrades with evidence.",
       "category": "web",
       "tags": [
         "rails",
-        "hyperdrive",
-        "mcp",
-        "setup",
-        "skills"
-      ]
-    },
-    {
-      "name": "optimize-tests",
-      "source": "./plugins/optimize-tests",
-      "description": "Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures.",
-      "category": "web",
-      "tags": [
-        "rails",
+        "ruby",
+        "audit",
         "testing",
-        "performance",
-        "test-prof",
-        "rspec"
-      ]
-    },
-    {
-      "name": "audit-active-record-concurrency",
-      "source": "./plugins/audit-active-record-concurrency",
-      "description": "Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants.",
-      "category": "web",
-      "tags": [
-        "rails",
-        "ruby",
-        "audit"
-      ]
-    },
-    {
-      "name": "audit-n-plus-one",
-      "source": "./plugins/audit-n-plus-one",
-      "description": "Audit Rails query growth, locate N+1 queries, and verify loading or batching fixes with regression coverage.",
-      "category": "web",
-      "tags": [
-        "rails",
-        "ruby",
-        "audit"
-      ]
-    },
-    {
-      "name": "audit-transactions",
-      "source": "./plugins/audit-transactions",
-      "description": "Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects.",
-      "category": "web",
-      "tags": [
-        "rails",
-        "ruby",
-        "audit"
-      ]
-    },
-    {
-      "name": "audit-http-clients",
-      "source": "./plugins/audit-http-clients",
-      "description": "Audit outbound Ruby HTTP clients for timeout budgets, retry safety, error handling, secret leakage, and failure isolation.",
-      "category": "web",
-      "tags": [
-        "rails",
-        "ruby",
-        "audit"
-      ]
-    },
-    {
-      "name": "audit-api-contracts",
-      "source": "./plugins/audit-api-contracts",
-      "description": "Audit Rails API contracts against request behavior, serializers, OpenAPI schemas, and compatibility requirements.",
-      "category": "web",
-      "tags": [
-        "rails",
-        "ruby",
-        "audit"
-      ]
-    },
-    {
-      "name": "write-rubocop-cops",
-      "source": "./plugins/write-rubocop-cops",
-      "description": "Write and test custom RuboCop cops for Ruby and Rails conventions, with version-aware rules and safe autocorrection.",
-      "category": "web",
-      "tags": [
-        "rails",
-        "ruby",
-        "development"
-      ]
-    },
-    {
-      "name": "audit-jobs",
-      "source": "./plugins/audit-jobs",
-      "description": "Audit Ruby and Rails jobs for retries, duplicate effects, delivery gaps, transaction timing, concurrency, and tenant fairness.",
-      "category": "web",
-      "tags": [
-        "rails",
-        "ruby",
-        "audit"
-      ]
-    },
-    {
-      "name": "upgrade-rails",
-      "source": "./plugins/upgrade-rails",
-      "description": "Assess and upgrade Rails applications with version-specific findings, configuration previews, dependency checks, and verified incremental upgrades.",
-      "category": "web",
-      "tags": [
-        "rails",
-        "ruby",
-        "upgrades",
-        "compatibility"
-      ]
-    },
-    {
-      "name": "upgrade-ruby",
-      "source": "./plugins/upgrade-ruby",
-      "description": "Assess and upgrade Ruby versions in Bundler and Rails applications with compatibility audits, toolchain updates, and verification.",
-      "category": "web",
-      "tags": [
-        "ruby",
-        "rails",
-        "upgrades",
-        "compatibility"
+        "upgrades"
       ]
     }
   ]
