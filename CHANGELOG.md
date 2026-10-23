@@ -36,6 +36,8 @@
 
 ### Fixed
 
+- Preserve existing upgrade-scan reports on failure, write explanations to the requested output, and reject output paths that would overwrite scan inputs.
+
 - Preserve legacy Hyperdrive content preferences before bundle changes or synchronization.
 - Link to the Markdown version of the Codex MCP documentation.
 - Use `rails-kit` as the marketplace name in both catalogs and installation instructions.

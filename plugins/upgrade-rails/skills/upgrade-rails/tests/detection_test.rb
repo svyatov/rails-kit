@@ -79,3 +79,5 @@ Dir.mktmpdir("upgrade-rails-test") do |root|
 end
 
 puts "Detection regressions passed."
+
+require_relative "output_test"

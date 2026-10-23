@@ -60,6 +60,7 @@ require "yaml"
 require "json"
 require "optparse"
 require "fileutils"
+require "tempfile"
 require_relative "hop"
 
 PATTERNS_DIR = File.expand_path("patterns", __dir__)
@@ -776,16 +777,13 @@ if $PROGRAM_NAME == __FILE__
     o.on("--only VARS", "per-site detail only for these variable_names (comma-separated)") { |v| opts[:only] = v.split(",").map(&:strip) }
     o.on("--explain VARS", "print these patterns' explanation, fix, prereqs and guide entry (or the guide's entry index while it has no markers), without scanning") { |v| opts[:explain] = v.split(",").map(&:strip) }
     o.on("--show-suppressed", "list the sites dropped by each entry's exclude:") { opts[:show_suppressed] = true }
-    o.on("--output FILE", "write to FILE instead of stdout (creates its directory; removed first, written only on success)") { |v| opts[:output] = v }
+    o.on("--output FILE", "write to FILE instead of stdout (creates its directory; replaces only on success)") { |v| opts[:output] = v }
     o.on("--self-test", "run built-in assertions and exit") { opts[:self_test] = true }
   end.parse!
 
   self_test if opts[:self_test]
 
-  # Remove the old output before anything can abort, so a failed run never
-  # leaves a stale or half-written file for the next workflow to read.
   output = opts[:output] ? File.expand_path(opts[:output]) : nil
-  File.delete(output) if output && File.file?(output)
 
   root = File.expand_path(opts[:root])
   abort("scan_patterns: --root #{opts[:root].inspect} is not a directory") unless File.directory?(root)
@@ -813,32 +811,45 @@ if $PROGRAM_NAME == __FILE__
     end
   end
 
-  if opts[:explain]
-    print render_explain(patterns, target, opts[:explain])
-    exit 0
-  end
-
-  results, roots = run_scan(patterns, root)
-  attach_guide_entries(results, target)
-  if opts[:only]
-    unknown = opts[:only] - results.map { |r| r[:variable] }
-    unless unknown.empty?
-      abort("scan_patterns: --only names no pattern in #{File.basename(patterns)}: #{unknown.join(', ')} " \
-            "(use the variable_name, e.g. #{results.first && results.first[:variable]})")
+  if output
+    scanner = Scanner.new(root)
+    entries = YAML.load_file(patterns).fetch("upgrade_findings", {}).values.flatten
+    inputs = [lockfile, patterns, __FILE__, File.join(__dir__, "hop.rb")]
+    inputs.concat(entries.flat_map { |entry| Array(entry["search_paths"]).flat_map { |path| scanner.candidate_files(path) } })
+    if inputs.any? { |path| File.expand_path(path) == output || (File.exist?(path) && File.exist?(output) && File.identical?(path, output)) }
+      abort("scan_patterns: output would overwrite an input file: #{output}")
     end
   end
-  # The hop's start comes from the guide that ends at the target, so --target
-  # 7.0 on a 4.0 app reads 6.1 -> 7.0, not 4.0 -> 7.0.
-  meta = {
-    :from => hop ? hop[:from] : (Hop.from_for(target) || "?"), :to => target, :root => root, :hop_source => hop_source, :modular_roots => roots,
-    :patterns_rel => patterns.sub(%r{\A.*/(detection-scripts/)}, '\1')
-  }
-  text = opts[:format] == "json" ? render_json(meta, results) : render_markdown(meta, results, opts)
+
+  text = if opts[:explain]
+    render_explain(patterns, target, opts[:explain])
+  else
+    results, roots = run_scan(patterns, root)
+    attach_guide_entries(results, target)
+    if opts[:only]
+      unknown = opts[:only] - results.map { |r| r[:variable] }
+      unless unknown.empty?
+        abort("scan_patterns: --only names no pattern in #{File.basename(patterns)}: #{unknown.join(', ')} " \
+              "(use the variable_name, e.g. #{results.first && results.first[:variable]})")
+      end
+    end
+    # Explicit targets select that hop's guide, even on an older application.
+    meta = {
+      :from => hop ? hop[:from] : (Hop.from_for(target) || "?"), :to => target, :root => root, :hop_source => hop_source, :modular_roots => roots,
+      :patterns_rel => patterns.sub(%r{\A.*/(detection-scripts/)}, '\1')
+    }
+    opts[:format] == "json" ? render_json(meta, results) : render_markdown(meta, results, opts)
+  end
   if output
     FileUtils.mkdir_p(File.dirname(output))
-    tmp = "#{output}.tmp#{Process.pid}"
-    File.write(tmp, text)
-    File.rename(tmp, output)
+    tmp = Tempfile.new([".rails-pattern-", ".tmp"], File.dirname(output))
+    begin
+      tmp.write(text)
+      tmp.close
+      File.rename(tmp.path, output)
+    ensure
+      tmp.close!
+    end
     $stderr.puts "scan_patterns: wrote #{output}"
   else
     print text
