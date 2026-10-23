@@ -1,0 +1,31 @@
+name: Bug report
+description: Report an installation problem, incorrect guidance, or a failed workflow.
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Affected skill
+      placeholder: audit-jobs, upgrade-rails, or marketplace installation
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment and versions
+      description: Include your agent, plugin, Rails, Ruby, and OS versions where relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Include the command or prompt and a minimal example. Remove secrets and private application data.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and actual behavior
+      description: Include relevant output. For incorrect guidance, link the skill section and supporting official documentation if available.
+    validations:
+      required: true
