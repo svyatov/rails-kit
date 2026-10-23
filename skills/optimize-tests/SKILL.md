@@ -18,6 +18,8 @@ Read the application's instructions, test runner, helpers, factory definitions, 
 
 Record the revision, exact command, selected tests, seed, example and failure counts, wall time, Ruby version, worker count, and machine or CI runner. Separate test execution from queue time, dependency installation, and application boot. Resolve existing failures or record them separately before attributing a change to optimization.
 
+For a dirty or concurrently edited checkout, use a fixed snapshot or record content hashes of relevant tracked and untracked inputs before and after each run. Reject runs whose inputs changed during execution, and confirm that before/after runs select the same examples.
+
 Use the same conditions for before/after measurements. Repeat timings enough to distinguish a useful change from ordinary variation; retain individual runs or report a median. A sampled profile can locate a problem, but is not a whole-suite benchmark.
 
 Done when the scope, baseline, and conditions for comparison are recorded.
