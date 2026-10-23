@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "hyperdrive",
+  "name": "setup-hyperdrive",
   "description": "Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync.",
   "version": "1.0.0",
   "author": {

@@ -5,10 +5,10 @@
   },
   "plugins": [
     {
-      "name": "hyperdrive",
+      "name": "setup-hyperdrive",
       "source": {
         "source": "local",
-        "path": "./plugins/hyperdrive"
+        "path": "./plugins/setup-hyperdrive"
       },
       "policy": {
         "installation": "AVAILABLE",
@@ -17,10 +17,10 @@
       "category": "web"
     },
     {
-      "name": "test-performance",
+      "name": "optimize-tests",
       "source": {
         "source": "local",
-        "path": "./plugins/test-performance"
+        "path": "./plugins/optimize-tests"
       },
       "policy": {
         "installation": "AVAILABLE",

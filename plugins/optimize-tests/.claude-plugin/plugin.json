@@ -1,6 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
-  "name": "test-performance",
+  "name": "optimize-tests",
   "description": "Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures.",
   "version": "1.0.0",
   "author": {

@@ -1,12 +1,12 @@
 ---
-name: hyperdrive
+name: setup-hyperdrive
 description: "Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync."
 license: MIT
 disable-model-invocation: true
 compatibility: Requires a Rails application, Ruby, Bundler, git, and network access for upstream checks and gem installation. MCP verification requires a local development server and an MCP client.
 ---
 
-# Rails Hyperdrive
+# Set up Hyperdrive
 
 Configure an existing Rails application for agent development with Rails Hyperdrive. The default full setup includes the engine, the article's `layered-rails-skills` companion, and a working connection from the user's agent. Respect requests for MCP-only, content-only, or another companion. Creating an application, changing its architecture, and publishing companion gems are separate tasks.
 

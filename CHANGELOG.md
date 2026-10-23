@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Rename the `hyperdrive` plugin and skill to `setup-hyperdrive`, and `test-performance` to `optimize-tests`. Update installation and invocation examples to use the new names.
+
 - Harden `upgrade-ruby` with active-interpreter and Gemfile checks, version-specific Ruby/Bundler coverage, portable audit reports, and confirmed native-extension rebuilds. Cover compatibility edits in files without Ruby pins and common require syntax, and use available Markdown documentation sources.
 
 - Refresh the README with the Rails Kit logo, validation and agent badges, quick navigation, and installation-first usage examples.
@@ -37,9 +39,9 @@
 
 - Add `audit-active-record-concurrency` 1.0.0: Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants.
 
-- Add `test-performance` 1.0.0, an original Rails test optimization workflow based on Evil Martians' case study, with profiling, side-effect controls, factory optimization, and shared-fixture guides.
+- Add `optimize-tests` 1.0.0, an original Rails test optimization workflow based on Evil Martians' case study, with profiling, side-effect controls, factory optimization, and shared-fixture guides.
 - Initialize Rails Kit with Claude Code and Codex marketplace catalogs.
-- Add `hyperdrive` 1.0.0 from Agent Toolkit's `rails-hyperdrive`, including configuration and source references.
+- Add `setup-hyperdrive` 1.0.0 from Agent Toolkit's `rails-hyperdrive`, including configuration and source references.
 - Validate the marketplace and every plugin in CI on pull requests and pushes to `main`.
 
 ### Fixed
