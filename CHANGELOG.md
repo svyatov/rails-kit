@@ -11,6 +11,8 @@
 
 ### Added
 
+- Add `upgrade-rails` 1.0.0: Merge the MIT-licensed Rails upgrade skills from [lucianghinda/superpowers-ruby](https://github.com/lucianghinda/superpowers-ruby), [ombulabs/claude-code_rails-upgrade-skill](https://github.com/ombulabs/claude-code_rails-upgrade-skill), and [maquina-app/rails-upgrade-skill](https://github.com/maquina-app/rails-upgrade-skill). Include version-aware assessments, configuration previews, incremental implementation, source provenance, and preserved supporting files.
+
 - Add `audit-jobs` 1.0.0: Audit Ruby and Rails jobs for retries, duplicate effects, delivery gaps, transaction timing, concurrency, and tenant fairness.
 
 - Add `write-rubocop-cops` 1.0.0: Write and test custom RuboCop cops for Ruby and Rails conventions, with version-aware rules and safe autocorrection.

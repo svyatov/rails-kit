@@ -15,6 +15,7 @@ Rails-related skills for Claude Code and Codex. Each skill is an individually in
 | [audit-api-contracts](plugins/audit-api-contracts/skills/audit-api-contracts/SKILL.md) | Audit Rails API contracts against request behavior, serializers, OpenAPI schemas, and compatibility requirements. |
 | [write-rubocop-cops](plugins/write-rubocop-cops/skills/write-rubocop-cops/SKILL.md) | Write and test custom RuboCop cops for Ruby and Rails conventions, with version-aware rules and safe autocorrection. |
 | [audit-jobs](plugins/audit-jobs/skills/audit-jobs/SKILL.md) | Audit Ruby and Rails jobs for retries, duplicate effects, delivery gaps, transaction timing, concurrency, and tenant fairness. |
+| [upgrade-rails](plugins/upgrade-rails/skills/upgrade-rails/SKILL.md) | Assess and upgrade Rails applications with version-specific findings, configuration previews, dependency checks, and verified incremental upgrades. |
 
 ## Installation
 
@@ -37,6 +38,8 @@ codex plugin add hyperdrive@rails-kit
 After installation, invoke `/hyperdrive:hyperdrive` in Claude Code or `$hyperdrive` in Codex, followed by your request. For another plugin, replace the name in the install command and invocation. For example, invoke `/audit-jobs:audit-jobs` or `$audit-jobs` to audit background jobs. Audits report findings first and apply fixes only when your request authorizes them.
 
 To install the test optimization skill, replace `hyperdrive@rails-kit` with `test-performance@rails-kit` in the install command. Invoke `/test-performance:test-performance` or `$test-performance` to profile and speed up the application's test suite. Its guides cover all optimization techniques from the [Evil Martians case study](https://evilmartians.com/chronicles/railing-against-time-tools-and-techniques-that-got-us-5x-faster-results), with measured verification and test-isolation checks.
+
+For Rails upgrades, install `upgrade-rails@rails-kit` and invoke `/upgrade-rails:upgrade-rails` or `$upgrade-rails` with the target version. The skill supports readiness assessments, configuration previews, and implementation, with source references preserved from three MIT-licensed upstream projects.
 
 To install from a local checkout, run these commands from its root and replace `svyatov/rails-kit` with `.` in the marketplace command.
 

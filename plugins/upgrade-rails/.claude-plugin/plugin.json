@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "upgrade-rails",
+  "description": "Assess and upgrade Rails applications with version-specific findings, configuration previews, dependency checks, and verified incremental upgrades.",
+  "version": "1.0.0",
+  "author": {
+    "name": "Leonid Svyatov",
+    "email": "leonid@svyatov.com",
+    "url": "https://www.svyatov.com"
+  },
+  "homepage": "https://github.com/svyatov/rails-kit",
+  "repository": "https://github.com/svyatov/rails-kit",
+  "license": "MIT"
+}

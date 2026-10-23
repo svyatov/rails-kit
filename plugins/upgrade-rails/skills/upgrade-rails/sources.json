@@ -1,0 +1,79 @@
+{
+  "created_at": "2026-10-23T11:38:44.000Z",
+  "type": "merge",
+  "sources": [
+    {
+      "url": "https://github.com/lucianghinda/superpowers-ruby/tree/99fac3d8bee27bab20b23d4bef6fa634738a59e8/skills/rails-upgrade",
+      "repository": "lucianghinda/superpowers-ruby",
+      "path": "skills/rails-upgrade",
+      "branch": "main",
+      "sha": "99fac3d8bee27bab20b23d4bef6fa634738a59e8",
+      "original_name": "rails-upgrade",
+      "fetched_at": "2026-10-23T11:38:44.424Z",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2025 Jesse Vincent",
+      "local_path": "references/superpowers-ruby"
+    },
+    {
+      "url": "https://github.com/ombulabs/claude-code_rails-upgrade-skill/tree/83e05bc7e697c20aaa1bc6be7df0eec0ef39d51e/rails-upgrade",
+      "repository": "ombulabs/claude-code_rails-upgrade-skill",
+      "path": "rails-upgrade",
+      "branch": "main",
+      "sha": "83e05bc7e697c20aaa1bc6be7df0eec0ef39d51e",
+      "original_name": "rails-upgrade",
+      "fetched_at": "2026-10-23T11:38:44.435Z",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2025 OmbuLabs.ai",
+      "local_path": "references/ombulabs"
+    },
+    {
+      "url": "https://github.com/maquina-app/rails-upgrade-skill/tree/19e52a677c723a9f165b3611b85035e0cff37cf6",
+      "repository": "maquina-app/rails-upgrade-skill",
+      "path": "",
+      "branch": "main",
+      "sha": "19e52a677c723a9f165b3611b85035e0cff37cf6",
+      "original_name": "rails-upgrade-assistant",
+      "fetched_at": "2026-10-23T11:38:44.435Z",
+      "license": "MIT",
+      "copyright": "Copyright (c) 2025 [Mario Alberto Chávez Cárdenas]",
+      "local_path": "references/maquina"
+    }
+  ],
+  "license": "MIT",
+  "copyright": [
+    "Copyright (c) 2025 Jesse Vincent",
+    "Copyright (c) 2025 OmbuLabs.ai",
+    "Copyright (c) 2025 [Mario Alberto Chávez Cárdenas]"
+  ],
+  "license_override": false,
+  "license_override_reason": null,
+  "adaptations": [
+    "Merged the entry points into upgrade-rails with explicit invocation and a human-facing description.",
+    "Preserved supporting files in source-specific directories and renamed original entry points to UPSTREAM.md.",
+    "Resolved conflicting workflow requirements in favor of official version-specific Rails documentation and the application's conventions.",
+    "Made MCP, companion skills, editor integration, and dual boot optional; removed stale version and performance claims from the entry point.",
+    "Redirected unresolved local Markdown links to their original source context; missing upstream resources are not supplied."
+  ],
+  "source_link_redirects": [
+    {
+      "file": "references/maquina/workflows/upgrade-report-workflow.md",
+      "target": "URL",
+      "source_context": "https://github.com/maquina-app/rails-upgrade-skill/blob/19e52a677c723a9f165b3611b85035e0cff37cf6/workflows/upgrade-report-workflow.md#L276"
+    },
+    {
+      "file": "references/maquina/workflows/upgrade-report-workflow.md",
+      "target": "URL",
+      "source_context": "https://github.com/maquina-app/rails-upgrade-skill/blob/19e52a677c723a9f165b3611b85035e0cff37cf6/workflows/upgrade-report-workflow.md#L277"
+    },
+    {
+      "file": "references/maquina/workflows/upgrade-report-workflow.md",
+      "target": "URL",
+      "source_context": "https://github.com/maquina-app/rails-upgrade-skill/blob/19e52a677c723a9f165b3611b85035e0cff37cf6/workflows/upgrade-report-workflow.md#L278"
+    },
+    {
+      "file": "references/maquina/workflows/upgrade-report-workflow.md",
+      "target": "URL",
+      "source_context": "https://github.com/maquina-app/rails-upgrade-skill/blob/19e52a677c723a9f165b3611b85035e0cff37cf6/workflows/upgrade-report-workflow.md#L279"
+    }
+  ]
+}

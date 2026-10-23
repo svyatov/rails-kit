@@ -110,6 +110,18 @@
         "ruby",
         "audit"
       ]
+    },
+    {
+      "name": "upgrade-rails",
+      "source": "./plugins/upgrade-rails",
+      "description": "Assess and upgrade Rails applications with version-specific findings, configuration previews, dependency checks, and verified incremental upgrades.",
+      "category": "web",
+      "tags": [
+        "rails",
+        "ruby",
+        "upgrades",
+        "compatibility"
+      ]
     }
   ]
 }
