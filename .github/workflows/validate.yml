@@ -18,6 +18,13 @@ jobs:
           persist-credentials: false
       - name: Validate skill contracts
         run: ruby scripts/validate.rb
+      - name: Test Rails upgrade detection
+        shell: ruby {0}
+        run: |
+          skill = "plugins/upgrade-rails/skills/upgrade-rails"
+          system("ruby", "#{skill}/tests/detection_test.rb", exception: true)
+          system("ruby", "#{skill}/references/ombulabs/detection-scripts/scan_patterns.rb", "--self-test", exception: true)
+          system("ruby", "#{skill}/references/ombulabs/detection-scripts/gem_limits.rb", "--self-test", exception: true)
       - name: Download Claude Code installer
         run: curl -fsSL https://claude.ai/install.sh --output "$RUNNER_TEMP/install-claude.sh"
       - name: Install Claude Code

@@ -1,0 +1,60 @@
+---
+version: '7.1'
+description: Selected Rails 7.1 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: legacy_connection_handling removed
+    pattern: legacy_connection_handling
+    exclude: ''
+    search_paths:
+    - config/
+    variable_name: LEGACY_CONNECTION_HANDLING
+    kind: breaking
+    explanation: Rails 7.1 removes legacy_connection_handling.
+    fix: Remove the obsolete setting and test multi-database role and shard switching with the supported connection-handling APIs.
+    sources:
+    - https://github.com/rails/rails/blob/v7.1.0/activerecord/CHANGELOG.md#L2018
+    verified_at: '2026-10-23'
+  medium_priority:
+  - name: preview_path singular deprecated
+    pattern: preview_path\s*=
+    exclude: preview_paths
+    search_paths:
+    - config/
+    variable_name: PREVIEW_PATH
+    kind: deprecation
+    explanation: Rails 7.1 deprecates singular action_mailer.preview_path in favor of preview_paths.
+    fix: Use the array-valued preview_paths setting, preserving all custom preview locations.
+    sources:
+    - https://github.com/rails/rails/blob/v7.1.0/actionmailer/CHANGELOG.md#L137
+    verified_at: '2026-10-23'
+  - name: ActiveRecord::Migration.check_pending! deprecated
+    pattern: Migration\.check_pending!
+    exclude: ''
+    search_paths:
+    - test/
+    - spec/
+    - config/
+    - lib/
+    variable_name: MIGRATION_CHECK_PENDING
+    kind: deprecation
+    explanation: Rails 7.1 deprecates Migration.check_pending! in favor of check_all_pending!.
+    fix: Use check_all_pending! where all configured databases must be checked. Review a call with a custom connection separately.
+    sources:
+    - https://github.com/rails/rails/blob/v7.1.0/activerecord/CHANGELOG.md#L526
+    verified_at: '2026-10-23'
+  - name: Rails.application.secrets and encrypted secrets deprecated
+    pattern: "\\bRails\\.application\\.secrets\\b"
+    exclude: ''
+    search_paths:
+    - config/
+    - app/
+    - lib/
+    variable_name: SECRETS_YML_ENC
+    kind: deprecation
+    explanation: Rails 7.1 deprecates Rails.application.secrets.
+    fix: Move the application's actual secrets to its established credentials or environment configuration, preserving environment-specific values and key management.
+    sources:
+    - https://github.com/rails/rails/blob/v7.1.0/railties/CHANGELOG.md#L165
+    verified_at: '2026-10-23'
+  low_priority: []

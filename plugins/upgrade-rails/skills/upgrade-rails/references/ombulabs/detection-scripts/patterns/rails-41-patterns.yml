@@ -1,0 +1,33 @@
+---
+version: '4.1'
+description: Selected Rails 4.1 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: return inside inline callback block
+    pattern: "^\\s*(before_|after_|around_)(save|create|update|destroy|validation|commit|rollback|initialize|find|touch)\\b.*\\{[^}]*\\breturn\\b"
+    exclude: ''
+    search_paths:
+    - app/models/
+    - app/controllers/
+    - lib/
+    variable_name: CALLBACK_RETURN
+    kind: breaking
+    explanation: An explicit return in an inline callback block can raise LocalJumpError on Rails 4.1.
+    fix: Inspect the matched callback and remove the nonlocal return while preserving its control flow. Methods used as callbacks are different from inline blocks.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L2277
+    verified_at: '2026-10-23'
+  medium_priority:
+  - name: default_scope in models
+    pattern: "^\\s*default_scope\\b"
+    exclude: ''
+    search_paths:
+    - app/models/
+    variable_name: DEFAULT_SCOPE
+    kind: migration
+    explanation: Rails 4.1 merges default-scope conditions with later conditions instead of replacing conflicting conditions.
+    fix: Test queries that override a default-scoped attribute. Use targeted rewhere or unscope only where the previous override was intended.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L2366
+    verified_at: '2026-10-23'
+  low_priority: []

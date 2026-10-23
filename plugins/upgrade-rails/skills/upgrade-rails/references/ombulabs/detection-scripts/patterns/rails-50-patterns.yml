@@ -1,0 +1,45 @@
+---
+version: '5.0'
+description: Selected Rails 5.0 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: assigns in tests
+    pattern: 'assigns\(:'
+    exclude: ''
+    search_paths:
+    - test/
+    - spec/
+    variable_name: ASSIGNS_IN_TESTS
+    kind: breaking
+    explanation: Rails 5.0 extracts assigns and assert_template from controller testing.
+    fix: Check whether rails-controller-testing already supplies the API. Preserve the assertion with that dependency or use an equivalent response-level assertion.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L1573
+    verified_at: '2026-10-23'
+  - name: assert_template in tests
+    pattern: assert_template
+    exclude: ''
+    search_paths:
+    - test/
+    - spec/
+    variable_name: ASSERT_TEMPLATE
+    kind: breaking
+    explanation: Rails 5.0 extracts assert_template and assigns from controller testing.
+    fix: Check the existing test dependencies and replace the assertion only when an equivalent response-level check covers the behavior.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L1573
+    verified_at: '2026-10-23'
+  medium_priority:
+  - name: Callback returning false to halt
+    pattern: "\\breturn\\s+false\\b|^[ \\t]*false(?:[ \\t]+(?:if|unless)\\b[^\\n]*)?(?=[ \\t]*(#[^\\n]*)?\\n\\s*(end|else|elsif|when|rescue|ensure)\\b)|\\bbefore_(save|create|update|destroy|validation)\\b[^\\n{]*\\{[^}\\n]*\\bfalse\\b"
+    exclude: "\\A\\s*#"
+    search_paths:
+    - app/models/
+    variable_name: CALLBACK_HALT
+    kind: migration
+    explanation: Rails 5.0 introduces throw(:abort) for halting Active Record and Active Model callbacks; legacy behavior depends on configuration.
+    fix: Test callbacks intended to cancel persistence. Use throw(:abort) where halting is intended, and review the framework-default setting before changing it.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L1532
+    verified_at: '2026-10-23'
+  low_priority: []

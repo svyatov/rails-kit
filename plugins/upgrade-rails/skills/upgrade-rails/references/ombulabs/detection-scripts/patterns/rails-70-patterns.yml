@@ -1,0 +1,44 @@
+---
+version: '7.0'
+description: Selected Rails 7.0 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: Autoloader configuration removed
+    pattern: "\\bautoloader\\s*="
+    exclude: ''
+    search_paths:
+    - config/
+    variable_name: CLASSIC_AUTOLOADER
+    kind: breaking
+    explanation: Rails 7.0 requires Zeitwerk and removes config.autoloader=.
+    fix: Migrate classic-mode applications with the official Zeitwerk guide and validate eager loading. Remove config.autoloader assignments, including :zeitwerk assignments, after confirming the application loads correctly.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L514
+    verified_at: '2026-10-23'
+  medium_priority:
+  - name: to_s(:format) deprecation
+    pattern: "\\.to_s\\(:"
+    exclude: ''
+    search_paths:
+    - app/
+    - lib/
+    variable_name: TO_S_FORMAT
+    kind: deprecation
+    explanation: Rails 7.0 deprecates passing a format argument to the extended to_s methods on supported Ruby types.
+    fix: Confirm the receiver type, then use to_fs or to_formatted_s with the same format. Calls on unrelated application objects may be valid.
+    sources:
+    - https://github.com/rails/rails/blob/v7.0.0/activesupport/CHANGELOG.md#L24
+    verified_at: '2026-10-23'
+  - name: config.action_controller.urlsafe_csrf_tokens set explicitly
+    pattern: "\\burlsafe_csrf_tokens\\s*="
+    exclude: "\\A\\s*#"
+    search_paths:
+    - config/
+    variable_name: URLSAFE_CSRF_TOKENS
+    kind: deprecation
+    explanation: Rails 7.0 deprecates urlsafe_csrf_tokens because URL-safe tokens are always enabled.
+    fix: Remove the obsolete assignment and verify custom token consumers. This is not a requirement to disable CSRF protection.
+    sources:
+    - https://github.com/rails/rails/blob/v7.0.0/actionpack/CHANGELOG.md#L3
+    verified_at: '2026-10-23'
+  low_priority: []

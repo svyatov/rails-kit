@@ -1,0 +1,31 @@
+---
+version: '4.2'
+description: Selected Rails 4.2 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: respond_with usage
+    pattern: "\\brespond_with\\b"
+    exclude: ''
+    search_paths:
+    - app/controllers/
+    variable_name: RESPOND_WITH
+    kind: breaking
+    explanation: Rails 4.2 extracts respond_with and class-level respond_to into the responders gem.
+    fix: Check whether the application already uses responders. Otherwise retain it through a vetted compatible dependency or implement explicit responses.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L1850
+    verified_at: '2026-10-23'
+  - name: Class-level respond_to declaration
+    pattern: "^\\s*respond_to\\s+:"
+    exclude: ''
+    search_paths:
+    - app/controllers/
+    variable_name: CLASS_RESPOND_TO
+    kind: breaking
+    explanation: Rails 4.2 extracts class-level respond_to into responders; instance-level respond_to blocks remain part of Rails.
+    fix: Confirm this is a class declaration before changing it. Preserve response formats with responders or explicit controller responses.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L1850
+    verified_at: '2026-10-23'
+  medium_priority: []
+  low_priority: []

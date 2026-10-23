@@ -15,6 +15,7 @@ Rails-related skills for Claude Code and Codex. Each skill is an individually in
 | [audit-api-contracts](plugins/audit-api-contracts/skills/audit-api-contracts/SKILL.md) | Audit Rails API contracts against request behavior, serializers, OpenAPI schemas, and compatibility requirements. |
 | [write-rubocop-cops](plugins/write-rubocop-cops/skills/write-rubocop-cops/SKILL.md) | Write and test custom RuboCop cops for Ruby and Rails conventions, with version-aware rules and safe autocorrection. |
 | [audit-jobs](plugins/audit-jobs/skills/audit-jobs/SKILL.md) | Audit Ruby and Rails jobs for retries, duplicate effects, delivery gaps, transaction timing, concurrency, and tenant fairness. |
+| [upgrade-rails](plugins/upgrade-rails/skills/upgrade-rails/SKILL.md) | Assess and upgrade Rails applications with version-specific findings, configuration previews, dependency checks, and verified incremental upgrades. |
 
 ## Installation
 
@@ -38,6 +39,8 @@ After installation, invoke `/hyperdrive:hyperdrive` in Claude Code or `$hyperdri
 
 To install the test optimization skill, replace `hyperdrive@rails-kit` with `test-performance@rails-kit` in the install command. Invoke `/test-performance:test-performance` or `$test-performance` to profile and speed up the application's test suite. Its guides cover all optimization techniques from the [Evil Martians case study](https://evilmartians.com/chronicles/railing-against-time-tools-and-techniques-that-got-us-5x-faster-results), with measured verification and test-isolation checks.
 
+For Rails upgrades, install `upgrade-rails@rails-kit` and invoke `/upgrade-rails:upgrade-rails` or `$upgrade-rails` with the target version. The skill supports readiness assessments, configuration previews, and implementation, with source references preserved from three MIT-licensed upstream projects.
+
 To install from a local checkout, run these commands from its root and replace `svyatov/rails-kit` with `.` in the marketplace command.
 
 ## Structure
@@ -45,6 +48,8 @@ To install from a local checkout, run these commands from its root and replace `
 Each `plugins/<name>/` directory contains a plugin manifest and `skills/<name>/SKILL.md`, with supporting references where needed. `.claude-plugin/marketplace.json` and `.agents/plugins/marketplace.json` expose the same plugins to Claude Code and Codex.
 
 Run `ruby scripts/validate.rb` to check invocation policy, catalog consistency, frontmatter, descriptions, and local references. CI runs this check before host-specific plugin validation.
+
+Run `ruby plugins/upgrade-rails/skills/upgrade-rails/tests/detection_test.rb` for Rails upgrade detector regressions. CI also runs both bundled detection helpers' self-tests.
 
 Skill instructions prefer public APIs documented for the application's Rails and Ruby versions and preserve framework conventions. Article techniques, extra gems, and architecture preferences are conditional choices, not mandatory replacements for native Rails behavior. Audits require evidence and verification for proposed changes.
 

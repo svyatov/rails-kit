@@ -1,0 +1,129 @@
+---
+version: '7.2'
+description: Selected Rails 7.2 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: params comparison removed
+    pattern: params\s*==|==\s*params
+    exclude: ''
+    search_paths:
+    - app/controllers/
+    - app/
+    variable_name: PARAMS_COMPARISON
+    kind: breaking
+    explanation: Rails 7.2 removes the deprecated equality comparison between ActionController::Parameters and Hash.
+    fix: Confirm the comparison is against a Hash and preserve parameter-permission semantics. Compare an explicitly permitted to_h value when a plain Hash is required; do not bypass Strong Parameters as an automatic fix.
+    sources:
+    - https://github.com/rails/rails/blob/v7.2.0/actionpack/CHANGELOG.md#L116
+    verified_at: '2026-10-23'
+  - name: Rails.application.secrets removed
+    pattern: Rails\.application\.secrets
+    exclude: ''
+    search_paths:
+    - app/
+    - lib/
+    - config/
+    variable_name: SECRETS_REMOVED
+    kind: breaking
+    explanation: Rails 7.2 removes Rails.application.secrets.
+    fix: Move the values to the application's established credentials or environment configuration, then test the affected paths without exposing secret values.
+    sources:
+    - https://github.com/rails/rails/blob/v7.2.0/railties/CHANGELOG.md#L61
+    verified_at: '2026-10-23'
+  - name: ActiveRecord::Migration.check_pending! removed
+    pattern: Migration\.check_pending!
+    exclude: ''
+    search_paths:
+    - test/
+    - spec/
+    - config/
+    - lib/
+    variable_name: MIGRATION_CHECK_PENDING_REMOVED
+    kind: breaking
+    explanation: Rails 7.2 removes Migration.check_pending!.
+    fix: Use check_all_pending! for the configured environment, reviewing custom connection arguments and multi-database behavior.
+    sources:
+    - https://github.com/rails/rails/blob/v7.2.0/activerecord/CHANGELOG.md#L446
+    verified_at: '2026-10-23'
+  - name: Ruby version
+    pattern: ^\s*(?:ruby\s*\(?\s*["'](?:=\s*|~>\s*(?=\d+\.\d+\.\d))?|ruby-|ruby\s+)?(?:2\.\d+|3\.0)(?:\.\d+)*(?![\d.])|^\s*ruby\s*\(?\s*["']~>\s*2\.\d+(?![\d.])
+    exclude: ''
+    search_paths:
+    - Gemfile
+    - ".ruby-version"
+    - ".tool-versions"
+    variable_name: RUBY_VERSION
+    kind: breaking
+    explanation: The Rails 7.2.0 gem requires Ruby 3.1.0 or newer. This pattern detects common lower-version declarations, not every Ruby requirement expression.
+    fix: Verify the running Ruby and deployment/CI versions against the exact selected Rails patch. Upgrade Ruby separately when current and target Rails compatibility permits.
+    sources:
+    - https://github.com/rails/rails/blob/v7.2.0/rails.gemspec#L12
+    verified_at: '2026-10-23'
+  - name: Positional serialize argument removed
+    pattern: \bserialize\s*(?:\(\s*)?(?::\w+|["\x27][^"\x27]+["\x27])\s*,\s*(?!\w+\s*:)(?:::)?[A-Z]\w*(?:::\w+)*\b
+    exclude: ''
+    search_paths:
+    - app/models/
+    variable_name: SERIALIZE_SYNTAX
+    kind: breaking
+    explanation: Rails 7.2 removes the positional coder or class argument to serialize. A bare declaration can still use the configured default coder.
+    fix: 'Convert a positional coder to coder: and a positional value class to type:, preserving the stored format. JSON and YAML are coders, not attribute types.'
+    sources:
+    - https://github.com/rails/rails/blob/v7.2.0/activerecord/CHANGELOG.md#L421
+    - https://github.com/rails/rails/blob/v7.2.0/activerecord/lib/active_record/attribute_methods/serialization.rb#L183
+    verified_at: '2026-10-23'
+  - name: fixture_path removed
+    pattern: "\\bfixture_path\\b"
+    exclude: fixture_paths
+    search_paths:
+    - test/
+    - spec/
+    - config/
+    variable_name: FIXTURE_PATH
+    kind: breaking
+    explanation: Rails 7.2 removes Active Record TestFixtures.fixture_path.
+    fix: Use fixture_paths with an array for Active Record configuration. Inspect test-framework compatibility before changing an RSpec-owned setting.
+    sources:
+    - https://github.com/rails/rails/blob/v7.2.0/activerecord/CHANGELOG.md#L429
+    verified_at: '2026-10-23'
+  medium_priority:
+  - name: Transaction-aware job enqueuing
+    pattern: perform_later|deliver_later
+    exclude: ''
+    search_paths:
+    - app/models/
+    - app/controllers/
+    - app/services/
+    variable_name: TRANSACTION_JOBS
+    kind: migration
+    explanation: Rails 7.2 supports deferring enqueues until transaction commit. Effective behavior depends on framework defaults, job settings, and the queue adapter.
+    fix: Keep asynchronous jobs asynchronous. Test commit and rollback behavior with the configured adapter, including enqueue failure handling. Inspect enqueue_after_transaction_commit and load_defaults; do not infer effective timing from a perform_later call alone.
+    sources:
+    - https://github.com/rails/rails/blob/v7.2.0/activejob/lib/active_job/enqueue_after_transaction_commit.rb#L13
+    verified_at: '2026-10-23'
+  - name: ActiveRecord.connection deprecated
+    pattern: "\\bActiveRecord::Base\\.connection\\b"
+    exclude: ''
+    search_paths:
+    - app/
+    - lib/
+    variable_name: AR_CONNECTION
+    kind: deprecation
+    explanation: Rails 7.2 deprecates ActiveRecord::Base.connection.
+    fix: Use with_connection for bounded work or lease_connection when the code deliberately needs a leased connection. Preserve transaction and thread ownership.
+    sources:
+    - https://github.com/rails/rails/blob/v7.2.0/activerecord/CHANGELOG.md#L331
+    verified_at: '2026-10-23'
+  - name: Association query_constraints option
+    pattern: "(?:\\bquery_constraints:|:query_constraints\\s*=>)"
+    exclude: ''
+    search_paths:
+    - app/models/
+    variable_name: QUERY_CONSTRAINTS
+    kind: deprecation
+    explanation: Rails 7.2 deprecates the query_constraints association option in favor of foreign_key. The model-level query_constraints method is a separate API.
+    fix: Confirm an association option matched, then preserve its key columns using foreign_key. Do not replace a model-level query_constraints declaration.
+    sources:
+    - https://github.com/rails/rails/blob/v7.2.0/activerecord/CHANGELOG.md#L103
+    verified_at: '2026-10-23'
+  low_priority: []

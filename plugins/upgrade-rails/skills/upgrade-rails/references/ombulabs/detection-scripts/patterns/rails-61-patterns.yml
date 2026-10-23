@@ -1,0 +1,20 @@
+---
+version: '6.1'
+description: Selected Rails 6.1 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: update_attributes removed
+    pattern: "\\bupdate_attributes!?(?!\\w)"
+    exclude: ''
+    search_paths:
+    - app/
+    - lib/
+    variable_name: UPDATE_ATTRIBUTES_REMOVED
+    kind: breaking
+    explanation: Rails 6.1 removes update_attributes and update_attributes!.
+    fix: Use update and update!, preserving the non-bang or bang failure behavior.
+    sources:
+    - https://github.com/rails/rails/blob/v6.1.0/activerecord/CHANGELOG.md#L112
+    verified_at: '2026-10-23'
+  medium_priority: []
+  low_priority: []

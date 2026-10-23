@@ -1,0 +1,123 @@
+---
+version: '8.1'
+description: Selected Rails 8.1 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: Routes drawn with multiple paths (removed)
+    pattern: ^\s*(?:get|post|put|patch|delete|options|match)[\s(]+(?:"[^"\n]*"|'[^'\n]*'|:\w+[?!]?)\s*,\s*(?:"[^"\n]*"|'[^'\n]*'|:\w+[?!]?)(?![\w?!]|\s*=>)
+    exclude: ''
+    search_paths:
+    - config/routes.rb
+    - config/routes/
+    variable_name: ROUTES_MULTIPLE_PATHS_REMOVED
+    kind: breaking
+    explanation: Rails 8.1 removes support for multiple paths in one routing call.
+    fix: Declare each path separately and compare the resulting route table and helpers.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/actionpack/CHANGELOG.md#L107
+    verified_at: '2026-10-23'
+  - name: SuckerPunch adapter
+    pattern: sucker_punch
+    exclude: ''
+    search_paths:
+    - Gemfile
+    - config/
+    variable_name: SUCKER_PUNCH
+    kind: breaking
+    explanation: Rails 8.1 removes its built-in SuckerPunch adapter in favor of the gem-provided adapter.
+    fix: Check the installed sucker_punch version and its upstream adapter instructions. Preserve the chosen backend when it provides a compatible adapter.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/activejob/CHANGELOG.md#L25
+    verified_at: '2026-10-23'
+  - name: Benchmark.ms (removed)
+    pattern: "\\bBenchmark\\.ms\\b"
+    exclude: ''
+    search_paths:
+    - app/
+    - lib/
+    variable_name: BENCHMARK_MS_REMOVED
+    kind: breaking
+    explanation: Rails 8.1 removes the Rails-provided Benchmark.ms extension; an installed benchmark gem may supply it independently.
+    fix: Use ActiveSupport::Benchmark.realtime(:float_millisecond) to preserve millisecond units, or verify that the existing benchmark dependency supplies the method.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/activesupport/CHANGELOG.md#L7
+    - https://github.com/rails/rails/blob/v8.0.0/activesupport/lib/active_support/benchmark.rb#L11
+    verified_at: '2026-10-23'
+  - name: MySQL unsigned_float / unsigned_decimal short-hand
+    pattern: "\\bunsigned_(float|decimal)\\b"
+    exclude: ''
+    search_paths:
+    - db/migrate/
+    variable_name: MYSQL_UNSIGNED
+    kind: breaking
+    explanation: Rails 8.1 removes the MySQL unsigned_float and unsigned_decimal helpers.
+    fix: Use a supported numeric type and an appropriate CHECK constraint where supported, preserving schema behavior. Do not rewrite unsigned integer column options.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/activerecord/CHANGELOG.md#L128
+    verified_at: '2026-10-23'
+  medium_priority:
+  - name: Configured Sidekiq adapter
+    pattern: \bqueue_adapter\s*=\s*(?::sidekiq\b|["\x27]sidekiq["\x27])|ActiveJob::QueueAdapters::SidekiqAdapter
+    exclude: ''
+    search_paths:
+    - config/
+    - app/
+    variable_name: SIDEKIQ_ADAPTER
+    kind: deprecation
+    explanation: Rails 8.1 deprecates its built-in Sidekiq adapter; the application may already load an adapter from the Sidekiq gem.
+    fix: Check which adapter is loaded and the Sidekiq gem's documented compatibility. Upgrade that gem if needed; retaining Sidekiq is supported.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/activejob/CHANGELOG.md#L19
+    verified_at: '2026-10-23'
+  - name: ActiveSupport::Configurable
+    pattern: ActiveSupport::Configurable
+    exclude: ''
+    search_paths:
+    - app/
+    - lib/
+    - config/
+    variable_name: AS_CONFIGURABLE
+    kind: deprecation
+    explanation: Rails 8.1 deprecates ActiveSupport::Configurable.
+    fix: Review each configuration reader, writer, inheritance rule, and default before replacing it with class_attribute or an application-specific configuration object.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/activesupport/CHANGELOG.md#L407
+    verified_at: '2026-10-23'
+  - name: ignore_leading_brackets config
+    pattern: ignore_leading_brackets
+    exclude: ''
+    search_paths:
+    - config/
+    variable_name: IGNORE_LEADING_BRACKETS_CONFIG
+    kind: deprecation
+    explanation: Rails 8.1 deprecates action_dispatch.ignore_leading_brackets.
+    fix: Remove the obsolete assignment after checking the parser behavior and legacy parameter names used by application clients.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/actionpack/CHANGELOG.md#L147
+    verified_at: '2026-10-23'
+  - name: to_time_preserves_timezone config
+    pattern: to_time_preserves_timezone
+    exclude: "^\\s*#"
+    search_paths:
+    - config/
+    variable_name: TO_TIME_PRESERVES_TIMEZONE_CONFIG
+    kind: deprecation
+    explanation: Rails 8.1 deprecates config.active_support.to_time_preserves_timezone.
+    fix: Remove the obsolete assignment after testing code that relies on timezone or offset conversion.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/activesupport/CHANGELOG.md#L20
+    verified_at: '2026-10-23'
+  - name: String#mb_chars / Multibyte::Chars
+    pattern: "\\.mb_chars\\b|ActiveSupport::Multibyte::Chars"
+    exclude: ''
+    search_paths:
+    - app/
+    - lib/
+    variable_name: MB_CHARS
+    kind: deprecation
+    explanation: Rails 8.1 deprecates String#mb_chars and ActiveSupport::Multibyte::Chars.
+    fix: Use Ruby's native string operations where equivalent and test the application's actual Unicode cases.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/activesupport/CHANGELOG.md#L400
+    verified_at: '2026-10-23'
+  low_priority: []

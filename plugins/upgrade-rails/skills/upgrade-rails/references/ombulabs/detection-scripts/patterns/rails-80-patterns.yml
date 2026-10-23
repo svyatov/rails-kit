@@ -1,0 +1,86 @@
+---
+version: '8.0'
+description: Selected Rails 8.0 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: enum with keyword-arguments form
+    pattern: "^\\s*enum\\s+\\w+:\\s*"
+    exclude: ''
+    search_paths:
+    - app/models/
+    variable_name: ENUM_KWARGS
+    kind: breaking
+    explanation: Rails 8.0 removes the keyword-only enum declaration form.
+    fix: Use positional enum name and values, converting legacy options such as _prefix to prefix. Preserve values, scopes, and generated method names.
+    sources:
+    - https://github.com/rails/rails/blob/v8.0.0/activerecord/CHANGELOG.md#L64
+    verified_at: '2026-10-23'
+  - name: read_encrypted_secrets config
+    pattern: read_encrypted_secrets
+    exclude: "^\\s*#"
+    search_paths:
+    - config/
+    variable_name: READ_ENCRYPTED_SECRETS
+    kind: breaking
+    explanation: Rails 8.0 removes config.read_encrypted_secrets.
+    fix: Remove the obsolete setting after migrating its values to the application's established credentials configuration.
+    sources:
+    - https://github.com/rails/rails/blob/v8.0.0/railties/CHANGELOG.md#L31
+    verified_at: '2026-10-23'
+  - name: ENV["SCHEMA_CACHE"] usage
+    pattern: ENV\[['"]SCHEMA_CACHE['"]\]|\bSCHEMA_CACHE=
+    exclude: ''
+    search_paths:
+    - config/
+    - lib/
+    - bin/
+    - ".github/"
+    - ".circleci/"
+    variable_name: ENV_SCHEMA_CACHE
+    kind: breaking
+    explanation: Rails 8.0 removes the SCHEMA_CACHE environment setting.
+    fix: Use the database configuration schema_cache_path option when a custom dump path is needed, and verify the schema-cache load/dump commands.
+    sources:
+    - https://github.com/rails/rails/blob/v8.0.0/activerecord/CHANGELOG.md#L44
+    verified_at: '2026-10-23'
+  medium_priority:
+  - name: unsigned_float / unsigned_decimal in migrations
+    pattern: "\\bunsigned_(float|decimal)\\b"
+    exclude: ''
+    search_paths:
+    - db/migrate/
+    variable_name: UNSIGNED_FLOAT_DECIMAL
+    kind: deprecation
+    explanation: Rails 8.0 deprecates the MySQL unsigned_float and unsigned_decimal column helpers.
+    fix: 'Review schema intent and the database version. Prefer the documented numeric type and an appropriate nonnegative CHECK constraint where supported. Preserve existing migration replay behavior; unsigned: true on integer columns is a different API.'
+    sources:
+    - https://github.com/rails/rails/blob/v8.0.0/activerecord/CHANGELOG.md#L141
+    verified_at: '2026-10-23'
+  - name: Benchmark.ms
+    pattern: "\\bBenchmark\\.ms\\b"
+    exclude: ''
+    search_paths:
+    - app/
+    - lib/
+    variable_name: BENCHMARK_MS
+    kind: deprecation
+    explanation: Rails 8.0 deprecates the Benchmark.ms extension.
+    fix: Use ActiveSupport::Benchmark.realtime(:float_millisecond) when preserving a millisecond result, and retain any explicitly required benchmark library until other uses are checked.
+    sources:
+    - https://github.com/rails/rails/blob/v8.0.0/activesupport/CHANGELOG.md#L59
+    - https://github.com/rails/rails/blob/v8.0.0/activesupport/lib/active_support/benchmark.rb#L11
+    verified_at: '2026-10-23'
+  - name: Routes drawn with multiple paths
+    pattern: ^\s*(?:get|post|put|patch|delete|match)\s*\(?\s*(?:"[^"\n]*"|'[^'\n]*'|:\w+(?!\w))\s*,\s*(?:"[^"\n]*"|'[^'\n]*'|:\w+(?!\w))(?!\s*(?:=>|:[^:]))
+    exclude: ''
+    search_paths:
+    - config/routes.rb
+    - config/routes/
+    variable_name: ROUTES_MULTIPLE_PATHS
+    kind: deprecation
+    explanation: Rails 8.0 deprecates passing multiple paths to one routing call.
+    fix: Declare the routes separately, preserving HTTP methods, path helpers, constraints, defaults, and route order.
+    sources:
+    - https://github.com/rails/rails/blob/v8.0.0/actionpack/CHANGELOG.md#L131
+    verified_at: '2026-10-23'
+  low_priority: []

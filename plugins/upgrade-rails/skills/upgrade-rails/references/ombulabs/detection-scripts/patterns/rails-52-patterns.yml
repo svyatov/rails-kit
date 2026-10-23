@@ -1,0 +1,33 @@
+---
+version: '5.2'
+description: Selected Rails 5.2 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: class_name option with unquoted constant
+    pattern: "(?:\\bclass_name:|:class_name\\s*=>)\\s*[A-Z][\\w:]*+(?!\\.(?:name|to_s)\\b)"
+    exclude: ''
+    search_paths:
+    - app/models/
+    - lib/
+    variable_name: CLASS_NAME_CONSTANT
+    kind: breaking
+    explanation: Rails 5.2 removes class constants as association class_name values.
+    fix: Use the intended fully qualified class name as a string and verify autoloading.
+    sources:
+    - https://github.com/rails/rails/blob/v5.2.0/activerecord/CHANGELOG.md#L399
+    verified_at: '2026-10-23'
+  - name: evented_redis Action Cable adapter (removed)
+    pattern: "\\bevented_redis\\b|\\bSubscriptionAdapter::EventedRedis\\b"
+    exclude: ''
+    search_paths:
+    - config/
+    - lib/
+    variable_name: EVENTED_REDIS_ADAPTER
+    kind: breaking
+    explanation: Rails 5.2 removes Action Cable's evented_redis adapter.
+    fix: Use the supported redis adapter and verify the deployment's connection and channel behavior.
+    sources:
+    - https://github.com/rails/rails/blob/v5.2.0/actioncable/CHANGELOG.md#L3
+    verified_at: '2026-10-23'
+  medium_priority: []
+  low_priority: []

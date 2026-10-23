@@ -1,0 +1,33 @@
+---
+version: '6.0'
+description: Selected Rails 6.0 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: Legacy npm package names (actioncable / activestorage / rails-ujs)
+    pattern: '[''"](actioncable|activestorage|rails-ujs)[''"]'
+    exclude: "@rails/"
+    search_paths:
+    - package.json
+    - app/javascript/
+    variable_name: NPM_RAILS_PACKAGES
+    kind: breaking
+    explanation: Rails 6.0 moves the actioncable, activestorage, and rails-ujs JavaScript packages to the @rails scope.
+    fix: Update package names and imports when upgrading these packages. Retain the application's existing JavaScript build approach.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L1018
+    verified_at: '2026-10-23'
+  medium_priority:
+  - name: update_attributes deprecated
+    pattern: "\\bupdate_attributes!?(?!\\w)"
+    exclude: ''
+    search_paths:
+    - app/
+    - lib/
+    variable_name: UPDATE_ATTRIBUTES
+    kind: deprecation
+    explanation: Rails 6.0 deprecates update_attributes and update_attributes!.
+    fix: Use update and update!, preserving the non-bang or bang failure behavior.
+    sources:
+    - https://github.com/rails/rails/blob/v6.0.0/activerecord/CHANGELOG.md#L999
+    verified_at: '2026-10-23'
+  low_priority: []

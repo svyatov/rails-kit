@@ -1,0 +1,70 @@
+---
+version: '5.1'
+description: Selected Rails 5.1 upgrade candidates verified against official sources; not a complete compatibility check.
+upgrade_findings:
+  high_priority:
+  - name: render :text removed
+    pattern: "\\brender\\s+(:text\\s*=>|text:)"
+    exclude: ''
+    search_paths:
+    - app/controllers/
+    variable_name: RENDER_TEXT
+    kind: breaking
+    explanation: Rails 5.1 removes render :text.
+    fix: 'Use render plain: for a text/plain response. If the old action intentionally returned HTML, select the explicit HTML response and preserve escaping.'
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L1475
+    verified_at: '2026-10-23'
+  - name: render :nothing removed
+    pattern: "\\brender\\s+(:nothing\\s*=>|nothing:)"
+    exclude: ''
+    search_paths:
+    - app/controllers/
+    variable_name: RENDER_NOTHING
+    kind: breaking
+    explanation: Rails 5.1 removes render :nothing.
+    fix: Use head with the same response status. Verify headers and body expectations.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L1478
+    verified_at: '2026-10-23'
+  - name: redirect_to :back removed
+    pattern: redirect_to\s+:back\b
+    exclude: ''
+    search_paths:
+    - app/controllers/
+    variable_name: REDIRECT_TO_BACK
+    kind: breaking
+    explanation: Rails 5.1 removes redirect_to :back.
+    fix: Use redirect_back with an application-appropriate fallback_location. Preserve redirect authorization and expected fallback behavior.
+    sources:
+    - https://github.com/rails/rails/blob/v8.1.0/guides/source/upgrading_ruby_on_rails.md#L1482
+    verified_at: '2026-10-23'
+  - name: "*_filter callback methods removed"
+    pattern: "\\b(before|after|around|skip|skip_before|skip_after|skip_around|prepend_before|prepend_after|prepend_around|append_before|append_after|append_around)_filter\\b"
+    exclude: ''
+    search_paths:
+    - app/controllers/
+    - app/mailers/
+    - lib/
+    variable_name: FILTER_METHODS
+    kind: breaking
+    explanation: Rails 5.1 removes the deprecated controller filter method aliases.
+    fix: Use the corresponding action callback methods, such as before_action and skip_before_action.
+    sources:
+    - https://github.com/rails/rails/blob/v5.1.0/actionpack/CHANGELOG.md#L319
+    verified_at: '2026-10-23'
+  - name: use_transactional_fixtures removed
+    pattern: use_transactional_fixtures
+    exclude: "\\bconfig\\.use_transactional_fixtures\\b"
+    search_paths:
+    - test/
+    - spec/
+    variable_name: USE_TRANSACTIONAL_FIXTURES
+    kind: breaking
+    explanation: Rails 5.1 removes Active Record's use_transactional_fixtures setting.
+    fix: Use use_transactional_tests for Active Record test configuration. Check test-framework ownership before changing a similarly named RSpec setting.
+    sources:
+    - https://github.com/rails/rails/blob/v5.1.0/activerecord/CHANGELOG.md#L304
+    verified_at: '2026-10-23'
+  medium_priority: []
+  low_priority: []
