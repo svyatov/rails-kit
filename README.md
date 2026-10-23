@@ -31,17 +31,17 @@ Register the marketplace and install the skill with your agent's CLI.
 
 ```sh
 claude plugin marketplace add svyatov/rails-kit
-claude plugin install hyperdrive@rails-kit
+claude plugin install setup-hyperdrive@rails-kit
 ```
 
 ### Codex
 
 ```sh
 codex plugin marketplace add svyatov/rails-kit
-codex plugin add hyperdrive@rails-kit
+codex plugin add setup-hyperdrive@rails-kit
 ```
 
-Replace `hyperdrive@rails-kit` with any plugin from the [skill catalog](#skills). To install from a local checkout, run the marketplace command from its root with `.` instead of `svyatov/rails-kit`.
+Replace `setup-hyperdrive@rails-kit` with any plugin from the [skill catalog](#skills). To install from a local checkout, run the marketplace command from its root with `.` instead of `svyatov/rails-kit`.
 
 ## Usage
 
@@ -59,14 +59,14 @@ Open your Rails project in your agent and invoke the installed skill with a requ
 $audit-jobs Audit app/jobs for retries and duplicate side effects. Report findings before making changes.
 ```
 
-The invocation format is `/plugin-name:skill-name` in Claude Code and `$skill-name` in Codex. Plugin and skill names match throughout this collection. For the installation example above, use `/hyperdrive:hyperdrive` or `$hyperdrive`.
+The invocation format is `/plugin-name:skill-name` in Claude Code and `$skill-name` in Codex. Plugin and skill names match throughout this collection. For the installation example above, use `/setup-hyperdrive:setup-hyperdrive` or `$setup-hyperdrive`.
 
 ## Skills
 
 | Skill | Description |
 | --- | --- |
-| [hyperdrive](plugins/hyperdrive/skills/hyperdrive/SKILL.md) | Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync. |
-| [test-performance](plugins/test-performance/skills/test-performance/SKILL.md) | Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures. |
+| [setup-hyperdrive](plugins/setup-hyperdrive/skills/setup-hyperdrive/SKILL.md) | Set up and maintain Rails Hyperdrive in a Rails project: development-only gems, companion skills, MCP access, and safe content sync. |
+| [optimize-tests](plugins/optimize-tests/skills/optimize-tests/SKILL.md) | Profile and speed up Rails tests with TestProf, targeted side-effect controls, lean factories, and safely shared fixtures. |
 | [audit-active-record-concurrency](plugins/audit-active-record-concurrency/skills/audit-active-record-concurrency/SKILL.md) | Audit concurrent Active Record writes for duplicate records, lost updates, and broken database invariants. |
 | [audit-n-plus-one](plugins/audit-n-plus-one/skills/audit-n-plus-one/SKILL.md) | Audit Rails query growth, locate N+1 queries, and verify loading or batching fixes with regression coverage. |
 | [audit-transactions](plugins/audit-transactions/skills/audit-transactions/SKILL.md) | Audit Rails transaction boundaries, rollback behavior, exception handling, and external side effects. |
@@ -77,7 +77,7 @@ The invocation format is `/plugin-name:skill-name` in Claude Code and `$skill-na
 | [upgrade-rails](plugins/upgrade-rails/skills/upgrade-rails/SKILL.md) | Assess and upgrade Rails applications with version-specific findings, configuration previews, dependency checks, and verified incremental upgrades. |
 | [upgrade-ruby](plugins/upgrade-ruby/skills/upgrade-ruby/SKILL.md) | Assess and upgrade Ruby versions in Bundler and Rails applications with compatibility audits, toolchain updates, and verification. |
 
-To install the test optimization skill, replace `hyperdrive@rails-kit` with `test-performance@rails-kit` in the install command. Invoke `/test-performance:test-performance` or `$test-performance` to profile and speed up the application's test suite. Its guides cover all optimization techniques from the [Evil Martians case study](https://evilmartians.com/chronicles/railing-against-time-tools-and-techniques-that-got-us-5x-faster-results), with measured verification and test-isolation checks.
+To install the test optimization skill, replace `setup-hyperdrive@rails-kit` with `optimize-tests@rails-kit` in the install command. Invoke `/optimize-tests:optimize-tests` or `$optimize-tests` to profile and speed up the application's test suite. Its guides cover all optimization techniques from the [Evil Martians case study](https://evilmartians.com/chronicles/railing-against-time-tools-and-techniques-that-got-us-5x-faster-results), with measured verification and test-isolation checks.
 
 For Rails upgrades, install `upgrade-rails@rails-kit` and invoke `/upgrade-rails:upgrade-rails` or `$upgrade-rails` with the target version. The skill supports readiness assessments, configuration previews, and implementation, with source references preserved from three MIT-licensed upstream projects.
 
