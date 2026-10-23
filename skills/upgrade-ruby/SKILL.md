@@ -75,8 +75,10 @@ Read in one parallel batch, recording each into a "Current state" table:
   scripts, with credentials redacted
 
 Record the active runtime with `ruby -v`, `gem --version`, and `bundle --version`.
-Distinguish the running Ruby from file pins and lockfile metadata. Record the
-baseline check results before making changes.
+Record this as shell state, separately from project pins.
+Activate the source Ruby through the existing version manager and verify
+its executable before running baseline checks. Keep that explicit runtime
+selection on every baseline command. Finish the baseline before editing.
 
 ## Phase 2: Risk inventory
 
@@ -131,6 +133,12 @@ If the user asked for **audit-only**, STOP HERE and print the report path.
 Branch hygiene first: if the current branch doesn't already encode this work,
 suggest a name like `upgrade-ruby-4-0-5` (prefix with the user's ticket id if
 they gave one).
+
+Resolve each target deployment image before changing version pins.
+For Docker, check the registry manifest for the exact tag and required
+architecture; this does not require a running Docker daemon.
+If unavailable, finish the read-only audit and report the blocker.
+Leave version pins unchanged unless the user requests a partial upgrade.
 
 For version-pin edits, update only existing pins that exclude the target;
 do not invent new version files. Confirmed compatibility changes may update
