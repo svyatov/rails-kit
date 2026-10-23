@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Write RuboCop Cops"
+  short_description: "Write and test custom Ruby and Rails cops"
 policy:
   allow_implicit_invocation: false

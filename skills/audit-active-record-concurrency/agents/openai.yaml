@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Audit Active Record Concurrency"
+  short_description: "Find unsafe concurrent Active Record writes"
 policy:
   allow_implicit_invocation: false

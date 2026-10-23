@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Audit Transactions"
+  short_description: "Audit transaction boundaries and side effects"
 policy:
   allow_implicit_invocation: false

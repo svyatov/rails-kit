@@ -1,2 +1,5 @@
+interface:
+  display_name: "Rails Kit: Audit HTTP Clients"
+  short_description: "Audit outbound HTTP timeouts and retry safety"
 policy:
   allow_implicit_invocation: false
