@@ -36,6 +36,8 @@
 
 ### Fixed
 
+- Add a shared Rails Kit icon to every plugin and validate its presence and dimensions to eliminate missing-icon warnings.
+
 - Align upgrade helper usage examples with the installed skill layout and current pattern coverage.
 
 - Report discovery, read, and matching failures as partial upgrade-scan coverage instead of clean results, retaining successful findings and exposing affected paths in Markdown and JSON.

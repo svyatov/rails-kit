@@ -31,6 +31,13 @@ paths.each do |path|
   description = manifest.fetch("description")
   plugin_root = "plugins/#{name}"
   check(path == "#{plugin_root}/.claude-plugin/plugin.json", "#{path}: name does not match directory")
+  icon = "#{plugin_root}/.claude-plugin/icon.png"
+  check(File.file?(icon), "#{name}: missing plugin icon")
+  header = File.binread(icon, 24)
+  check(header.start_with?("\x89PNG\r\n\x1a\n".b) && header.bytesize == 24, "#{icon}: invalid PNG header")
+  width, height = header.byteslice(16, 8).unpack("N2")
+  check(width == height && (512..2048).cover?(width), "#{icon}: must be square and 512 to 2048 pixels")
+  check(File.size(icon) < 2 * 1024 * 1024, "#{icon}: must be under 2 MB")
   check(manifest.fetch("version").match?(/\A\d+\.\d+\.\d+\z/), "#{path}: invalid version")
   claude_entry = claude.find { |entry| entry.fetch("name") == name }
   codex_entry = codex.find { |entry| entry.fetch("name") == name }
