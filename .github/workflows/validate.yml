@@ -20,10 +20,12 @@ jobs:
           persist-credentials: false
       - name: Validate skill contracts
         run: ruby scripts/validate.rb
+      - name: Test validator regressions
+        run: ruby scripts/validate_test.rb
       - name: Test Rails upgrade detection
         shell: ruby {0}
         run: |
-          skill = "plugins/upgrade-rails/skills/upgrade-rails"
+          skill = "skills/upgrade-rails"
           system("ruby", "#{skill}/tests/detection_test.rb", exception: true)
           system("ruby", "#{skill}/references/ombulabs/detection-scripts/scan_patterns.rb", "--self-test", exception: true)
           system("ruby", "#{skill}/references/ombulabs/detection-scripts/gem_limits.rb", "--self-test", exception: true)
@@ -31,11 +33,8 @@ jobs:
         run: curl -fsSL https://claude.ai/install.sh --output "$RUNNER_TEMP/install-claude.sh"
       - name: Install Claude Code
         run: bash "$RUNNER_TEMP/install-claude.sh"
-      - name: Validate marketplace and plugins
+      - name: Validate marketplace and root plugin
         shell: ruby {0}
         run: |
           claude = File.join(Dir.home, ".local/bin/claude")
           system(claude, "plugin", "validate", "--strict", "--json", ".", exception: true)
-          Dir.glob("plugins/*/").sort.each do |plugin|
-            system(claude, "plugin", "validate", "--strict", "--json", plugin, exception: true)
-          end

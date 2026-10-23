@@ -4,6 +4,12 @@
 
 ### Changed
 
+- Move the plugin icon to `assets/icon.png` and declare its path in the plugin manifest.
+
+- Map all 13 historical Claude Code plugin names to `rails-kit`, validate rename chains, and distinguish Claude Code's settings migration from Codex's manual migration.
+
+- Distribute all 11 skills as one `rails-kit` plugin, installed with `rails-kit@rails-kit`. Move skills to the root `skills/` directory, preserve their names and explicit invocation policy, and update both catalogs, validation, CI, and migration instructions.
+
 - Rename the `hyperdrive` plugin and skill to `setup-hyperdrive`, and `test-performance` to `optimize-tests`. Update installation and invocation examples to use the new names.
 
 - Harden `upgrade-ruby` with active-interpreter and Gemfile checks, version-specific Ruby/Bundler coverage, portable audit reports, and confirmed native-extension rebuilds. Cover compatibility edits in files without Ruby pins and common require syntax, and use available Markdown documentation sources.
