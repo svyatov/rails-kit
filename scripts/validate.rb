@@ -43,6 +43,20 @@ check(codex_entry.fetch("source") == {"source" => "local", "path" => "./"}, "#{n
 check(claude_entry.fetch("description") == description, "#{name}: catalog description differs")
 check(codex_entry.fetch("policy") == {"installation" => "AVAILABLE", "authentication" => "ON_INSTALL"}, "#{name}: incorrect installation policy")
 
+renames = claude["renames"]
+check(renames.is_a?(Hash) && !renames.empty?, "#{name}: rename history required")
+renames.each_key do |former|
+  target = former
+  visited = []
+  while renames.key?(target)
+    check(!visited.include?(target), "renames.#{former}: rename cycle")
+    visited << target
+    target = renames.fetch(target)
+    check(target.nil? || target.is_a?(String), "renames.#{former}: invalid target")
+  end
+  check(target.nil? || target == name, "renames.#{former}: chain does not resolve")
+end
+
 readme = File.read("README.md")
 check(readme.include?(description), "#{name}: README description differs")
 skills = Dir.glob("skills/*/SKILL.md").sort

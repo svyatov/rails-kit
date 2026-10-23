@@ -7,6 +7,24 @@ validator = File.expand_path("validate.rb", __dir__)
 icon = File.expand_path("../.claude-plugin/icon.png", __dir__)
 cases = {
   "multiple skills in one plugin" => [nil, nil],
+  "unresolved rename" => [->(root) {
+    path = "#{root}/.claude-plugin/marketplace.json"
+    catalog = JSON.parse(File.read(path))
+    catalog["renames"]["legacy-audit"] = "missing-plugin"
+    File.write(path, JSON.generate(catalog))
+  }, "chain does not resolve"],
+  "rename cycle" => [->(root) {
+    path = "#{root}/.claude-plugin/marketplace.json"
+    catalog = JSON.parse(File.read(path))
+    catalog["renames"]["audit-before"] = "legacy-audit"
+    File.write(path, JSON.generate(catalog))
+  }, "rename cycle"],
+  "missing rename history" => [->(root) {
+    path = "#{root}/.claude-plugin/marketplace.json"
+    catalog = JSON.parse(File.read(path))
+    catalog.delete("renames")
+    File.write(path, JSON.generate(catalog))
+  }, "rename history required"],
   "empty kit" => [->(root) { FileUtils.rm_r("#{root}/skills") }, "No skills found"],
   "Claude source" => [->(root) {
     path = "#{root}/.claude-plugin/marketplace.json"
@@ -52,7 +70,7 @@ cases.each do |name, (mutate, expected_error)|
     end
     write.call(".claude-plugin/plugin.json", JSON.generate(name: "rails-kit", description: "Rails kit.", version: "1.0.0"))
     FileUtils.cp(icon, "#{root}/.claude-plugin/icon.png")
-    write.call(".claude-plugin/marketplace.json", JSON.generate(name: "rails-kit", plugins: [{name: "rails-kit", description: "Rails kit.", source: "./"}]))
+    write.call(".claude-plugin/marketplace.json", JSON.generate(name: "rails-kit", plugins: [{name: "rails-kit", description: "Rails kit.", source: "./"}], renames: {"legacy-audit" => "audit-before", "audit-before" => "rails-kit", "retired-audit" => nil}))
     write.call(".agents/plugins/marketplace.json", JSON.generate(name: "rails-kit", plugins: [{name: "rails-kit", source: {source: "local", path: "./"}, policy: {installation: "AVAILABLE", authentication: "ON_INSTALL"}}]))
     write.call("AGENTS.md", "Fixture\n")
     write.call("CONTRIBUTING.md", "Fixture\n")

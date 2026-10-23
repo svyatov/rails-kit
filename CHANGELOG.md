@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Map all 13 historical Claude Code plugin names to `rails-kit`, validate rename chains, and distinguish Claude Code's settings migration from Codex's manual migration.
+
 - Distribute all 11 skills as one `rails-kit` plugin, installed with `rails-kit@rails-kit`. Move skills to the root `skills/` directory, preserve their names and explicit invocation policy, and update both catalogs, validation, CI, and migration instructions.
 
 - Rename the `hyperdrive` plugin and skill to `setup-hyperdrive`, and `test-performance` to `optimize-tests`. Update installation and invocation examples to use the new names.

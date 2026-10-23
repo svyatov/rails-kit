@@ -45,10 +45,10 @@ To install from a local checkout, run the marketplace command from its root with
 
 ### Migrating from individual plugins
 
-Earlier versions installed each skill as a separate plugin. Existing installations do not automatically become the kit.
+Earlier versions installed each skill as a separate plugin. Claude Code uses the catalog's rename history to migrate old plugin settings to `rails-kit`. Codex requires manual migration.
 
-1. Uninstall each old Rails Kit plugin you installed. Use `claude plugin uninstall <old-plugin>@rails-kit` or `codex plugin remove <old-plugin>@rails-kit`, replacing `<old-plugin>` with its installed name, such as `audit-jobs`, `setup-hyperdrive`, or `optimize-tests`. Older installations may use `hyperdrive` or `test-performance`.
-2. For a Git-backed marketplace, refresh it with `claude plugin marketplace update rails-kit` or `codex plugin marketplace upgrade rails-kit`. If you registered a local checkout, update that checkout instead. Then install `rails-kit@rails-kit` with the command above.
+1. In Codex, uninstall each old Rails Kit plugin you installed with `codex plugin remove <old-plugin>@rails-kit`, replacing `<old-plugin>` with its installed name, such as `audit-jobs`, `setup-hyperdrive`, or `optimize-tests`. Older installations may use `hyperdrive` or `test-performance`. Claude Code users can skip this step.
+2. For a Git-backed marketplace, refresh it with `claude plugin marketplace update rails-kit` or `codex plugin marketplace upgrade rails-kit`. If you registered a local checkout, update that checkout instead. Then install `rails-kit@rails-kit` with the command above. Claude Code users who installed from Git or a URL also need this one-time install to populate the renamed plugin's cache.
 3. Start a new session and invoke skills with the `rails-kit` namespace. For example, replace `/audit-jobs:audit-jobs` with `/rails-kit:audit-jobs` in Claude Code, and use `$rails-kit:audit-jobs` in Codex. Update saved prompts that use old plugin names.
 
 ## Usage

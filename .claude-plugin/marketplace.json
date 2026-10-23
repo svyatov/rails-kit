@@ -7,6 +7,21 @@
     "email": "leonid@svyatov.com",
     "url": "https://www.svyatov.com"
   },
+  "renames": {
+    "audit-active-record-concurrency": "rails-kit",
+    "audit-api-contracts": "rails-kit",
+    "audit-http-clients": "rails-kit",
+    "audit-jobs": "rails-kit",
+    "audit-n-plus-one": "rails-kit",
+    "audit-transactions": "rails-kit",
+    "hyperdrive": "rails-kit",
+    "optimize-tests": "rails-kit",
+    "setup-hyperdrive": "rails-kit",
+    "test-performance": "rails-kit",
+    "upgrade-rails": "rails-kit",
+    "upgrade-ruby": "rails-kit",
+    "write-rubocop-cops": "rails-kit"
+  },
   "plugins": [
     {
       "name": "rails-kit",
