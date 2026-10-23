@@ -4,6 +4,8 @@
 
 ### Changed
 
+- Curate `upgrade-rails` to one set of 55 detection rules with official source links, concise hop notes, and shared report/operation references. Remove duplicate imports and correct job timing, serialization, fixture paths, association constraints, and adapter detection.
+
 - Use Markdown article sources in the seven audit and cop-authoring skills to reduce retrieval overhead.
 - Strengthen current Rails conventions in every workflow, including Executor-wrapped concurrency tests, enqueue-failure checks, Strong Parameters and CSRF protection, native test isolation, and version-aware cop policies.
 - Require explicit invocation for every skill in Claude Code and Codex, with matching human-facing descriptions and invocation examples.

@@ -65,7 +65,7 @@ require_relative "hop"
 PATTERNS_DIR = File.expand_path("patterns", __dir__)
 PRIORITIES = %w[high_priority medium_priority low_priority].freeze
 PRIORITY_LABEL = { "high_priority" => "HIGH", "medium_priority" => "MEDIUM", "low_priority" => "LOW" }.freeze
-FIX_BEFORE_BUMP = %w[breaking deprecation].freeze
+API_CHANGES = %w[breaking deprecation].freeze
 KINDS = %w[breaking deprecation migration optional].freeze
 
 MAX_SPAN_LINES = 60
@@ -346,7 +346,7 @@ end
 
 # { variable_name => { :heading, :first, :last } } for every breaking-change
 # entry whose `**Pattern:**` marker names it (the first line under the
-# heading, see CLAUDE.md "Version guides"). A guide with no markers yet
+# heading). A guide with no markers
 # returns {}, and callers fall back to the heading index.
 def guide_markers(path)
   return {} unless path && File.file?(path)
@@ -361,11 +361,8 @@ def guide_markers(path)
     heads << i if !fence && l =~ /\A#+ /
   end
   found = {}
-  section = nil
   heads.each_with_index do |i, n|
     l = lines[i]
-    section = l.strip if l.start_with?("## ")
-    next unless l.start_with?("#### ") && section == "## Breaking Changes"
     marker = lines[(i + 1)..-1].find { |x| !x.strip.empty? }.to_s[/\A\*\*Pattern:\*\*\s*(.*)/, 1]
     next unless marker
     last = heads[n + 1] ? heads[n + 1] : lines.length
@@ -418,6 +415,8 @@ def render_explain(patterns_path, target, vars)
     out << "- Kind: #{e['kind']} · Priority: #{PRIORITY_LABEL[pr]}"
     out << "- Explanation: #{e['explanation']}"
     out << "- Fix: #{e['fix']}"
+    Array(e["sources"]).each { |source| out << "- Source: #{source}" }
+    out << "- Verified: #{e['verified_at']}" if e["verified_at"]
     Array(e["prereqs"]).each { |q| out << "- Prereq: #{q['gem']} >= #{q['min_version']} (#{q['reason']}#{q['when'] ? "; when #{q['when']}" : ''})" }
     out << ""
     next unless (m = markers[v])
@@ -494,8 +493,8 @@ def render_markdown(meta, results, opts)
          "(#{all_suppressed.length} with every site suppressed, which is not the same as clean)."
 
   unless opts[:summary]
-    [["Fix before bump", true], ["Fix when ready", false]].each do |label, before|
-      group = found.select { |r| FIX_BEFORE_BUMP.include?(r[:kind]) == before }
+    [["API change candidates", true], ["Behavior change candidates", false]].each do |label, api|
+      group = found.select { |r| API_CHANGES.include?(r[:kind]) == api }
       group = group.select { |r| opts[:only].include?(r[:variable]) } if opts[:only]
       next if group.empty?
       out << ""
@@ -505,6 +504,8 @@ def render_markdown(meta, results, opts)
         out << "### #{PRIORITY_LABEL[r[:priority]]} · #{r[:kind]} · #{r[:name]} (`#{r[:variable]}`), #{r[:hits].length} site(s)"
         out << ""
         out << "Fix: #{r[:fix]}" if r[:fix]
+        Array(r[:sources]).each { |source| out << "Source: #{source}" }
+        out << "Verified: #{r[:verified_at]}" if r[:verified_at]
         if (g = r[:guide_entry])
           out << ""
           out << "Guide: \"#{g[:heading]}\", `#{g[:file]}` lines #{g[:first]}-#{g[:last]} (or `--explain #{r[:variable]}`)"
@@ -593,6 +594,7 @@ def render_json(meta, results)
         "name" => r[:name], "variable_name" => r[:variable], "kind" => r[:kind],
         "priority" => r[:priority], "bucket" => r[:bucket],
         "explanation" => r[:explanation], "fix" => r[:fix], "prereqs" => r[:prereqs],
+        "sources" => r[:sources], "verified_at" => r[:verified_at],
         "files_scanned" => r[:files_scanned],
         "status" => status_of(r),
         # true when the entry fires on a path existing (pattern: ""); its sites
@@ -620,12 +622,13 @@ def run_scan(patterns_path, root)
   PRIORITIES.each do |priority|
     Array(findings[priority]).each do |entry|
       r = scanner.scan(entry)
-      bucket = FIX_BEFORE_BUMP.include?(entry["kind"]) ? "fix_before_bump" : "fix_when_ready"
+      bucket = API_CHANGES.include?(entry["kind"]) ? "api_change" : "behavior_change"
       results << {
         :name => entry["name"], :variable => entry["variable_name"], :kind => entry["kind"],
         :priority => priority, :bucket => bucket,
-        :bucket_label => bucket == "fix_before_bump" ? "Fix before bump" : "Fix when ready",
+        :bucket_label => bucket == "api_change" ? "API change candidate" : "Behavior change candidate",
         :explanation => entry["explanation"], :fix => entry["fix"], :prereqs => entry["prereqs"],
+        :sources => entry["sources"], :verified_at => entry["verified_at"],
         :exclude => entry["exclude"], :search_paths => entry["search_paths"],
         :files_scanned => r[:files_scanned], :hits => r[:hits], :suppressed => r[:suppressed],
         :path_only => r[:path_only]
@@ -635,7 +638,7 @@ def run_scan(patterns_path, root)
   # Bucket first, then priority, then the file's own order.
   order = results.each_with_index.map { |r, i| [r, i] }
   results = order.sort_by do |r, i|
-    [r[:bucket] == "fix_before_bump" ? 0 : 1, PRIORITIES.index(r[:priority]), i]
+    [r[:bucket] == "api_change" ? 0 : 1, PRIORITIES.index(r[:priority]), i]
   end.map(&:first)
   [results, scanner.modular_roots]
 end
@@ -730,8 +733,8 @@ def self_test
   check.call("an entry ends before the next priority heading (got #{mc.inspect})",
              mc && guide_entry_text(Hop.guide_for("7.2"), mc) !~ /PRIORITY/)
   ex72 = render_explain(patterns_file_for("7.2"), "7.2", ["RUBY_VERSION"])
-  check.call("--explain prints the marked guide entry, not the index",
-             ex72.include?("### Guide entry:") && ex72.include?("required_ruby_version") && ex72 !~ /^## Guide entries in/)
+  check.call("--explain prints the marked guide entry and official source, not the index",
+             ex72.include?("### Guide entry:") && ex72.include?("rails.gemspec#L12") && ex72 !~ /^## Guide entries in/)
   r72 = attach_guide_entries([{ :variable => "RUBY_VERSION" }, { :variable => "NOT_A_PATTERN" }], "7.2")
   check.call("attaches the guide entry to a result",
              r72[0][:guide_entry] && r72[0][:guide_entry][:file] == "version-guides/upgrade-7.1-to-7.2.md" && r72[1][:guide_entry].nil?)

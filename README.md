@@ -49,6 +49,8 @@ Each `plugins/<name>/` directory contains a plugin manifest and `skills/<name>/S
 
 Run `ruby scripts/validate.rb` to check invocation policy, catalog consistency, frontmatter, descriptions, and local references. CI runs this check before host-specific plugin validation.
 
+Run `ruby plugins/upgrade-rails/skills/upgrade-rails/tests/detection_test.rb` for Rails upgrade detector regressions. CI also runs both bundled detection helpers' self-tests.
+
 Skill instructions prefer public APIs documented for the application's Rails and Ruby versions and preserve framework conventions. Article techniques, extra gems, and architecture preferences are conditional choices, not mandatory replacements for native Rails behavior. Audits require evidence and verification for proposed changes.
 
 ## License
