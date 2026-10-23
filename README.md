@@ -75,6 +75,7 @@ The invocation format is `/plugin-name:skill-name` in Claude Code and `$skill-na
 | [write-rubocop-cops](plugins/write-rubocop-cops/skills/write-rubocop-cops/SKILL.md) | Write and test custom RuboCop cops for Ruby and Rails conventions, with version-aware rules and safe autocorrection. |
 | [audit-jobs](plugins/audit-jobs/skills/audit-jobs/SKILL.md) | Audit Ruby and Rails jobs for retries, duplicate effects, delivery gaps, transaction timing, concurrency, and tenant fairness. |
 | [upgrade-rails](plugins/upgrade-rails/skills/upgrade-rails/SKILL.md) | Assess and upgrade Rails applications with version-specific findings, configuration previews, dependency checks, and verified incremental upgrades. |
+| [upgrade-ruby](plugins/upgrade-ruby/skills/upgrade-ruby/SKILL.md) | Assess and upgrade Ruby versions in Bundler and Rails applications with compatibility audits, toolchain updates, and verification. |
 
 To install the test optimization skill, replace `hyperdrive@rails-kit` with `test-performance@rails-kit` in the install command. Invoke `/test-performance:test-performance` or `$test-performance` to profile and speed up the application's test suite. Its guides cover all optimization techniques from the [Evil Martians case study](https://evilmartians.com/chronicles/railing-against-time-tools-and-techniques-that-got-us-5x-faster-results), with measured verification and test-isolation checks.
 
