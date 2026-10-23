@@ -36,6 +36,8 @@
 
 ### Fixed
 
+- Report discovery, read, and matching failures as partial upgrade-scan coverage instead of clean results, retaining successful findings and exposing affected paths in Markdown and JSON.
+
 - Preserve existing upgrade-scan reports on failure, write explanations to the requested output, and reject output paths that would overwrite scan inputs.
 
 - Preserve legacy Hyperdrive content preferences before bundle changes or synchronization.

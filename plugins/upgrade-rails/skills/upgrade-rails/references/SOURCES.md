@@ -35,6 +35,6 @@ The audit removed duplicate advice, optional choices presented as requirements, 
 
 ## Limits
 
-This is a deliberately partial detector, not a full list of Rails changes or a Ruby parser. Patterns can match comments or unrelated methods and miss computed calls, uncommon syntax, configuration interactions, and runtime-only failures. Missing paths are reported as unscanned; suppressed matches are not proof of safety. Use official guides and application tests for every hop, including changes outside this set.
+This is a deliberately partial detector, not a full list of Rails changes or a Ruby parser. Patterns can match comments or unrelated methods and miss computed calls, uncommon syntax, configuration interactions, and runtime-only failures. Missing paths are reported as unscanned; suppressed matches are not proof of safety. Discovery, read, and matching errors are reported as partial coverage with affected paths. Successful findings remain visible, and only successfully read and matched files count as scanned. Use official guides and application tests for every hop, including changes outside this set.
 
 The lockfile helper checks selected declared constraints, not every dependency or exact-patch restriction. Verify resolver results and upstream compatibility separately. Neither helper authorizes application edits or decides whether a fix can ship before the Rails bump.

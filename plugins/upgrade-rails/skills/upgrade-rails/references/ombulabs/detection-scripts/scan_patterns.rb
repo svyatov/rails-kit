@@ -47,7 +47,8 @@
 #    hits (except a path-based entry, rule 7, where an absent path is the
 #    clean answer), and an entry whose every site was dropped by exclude: is
 #    "suppressed", never clean. "Could not scan" and "scanned clean" are
-#    different answers.
+#    different answers. Discovery, read, and matching errors produce partial
+#    coverage with the affected paths; successful findings are retained.
 # 6. Packwerk packs, engines and components are searched too: a search_path
 #    like "app/models/" also reaches packs/*/app/models/. node_modules, vendor,
 #    tmp, log, coverage are skipped at the app root and at each pack or engine
@@ -83,7 +84,6 @@ IGNORED_ANYWHERE = %w[node_modules .git .bundle].freeze
 # app/controllers/vendor/ are app code.
 IGNORED_AT_ROOT = %w[vendor tmp log coverage].freeze
 MODULAR_ROOT_SEEDS = %w[packs engines components].freeze
-MODULAR_ROOT_MARKERS = ["package.yml", "*.gemspec", "lib/*/engine.rb"].freeze
 MAX_MODULAR_ROOT_DEPTH = 2
 # Files that describe the app's own environment. A pack or engine ships its
 # own copy describing a different bundle, so these never expand into packs.
@@ -104,19 +104,45 @@ class Scanner
     @candidates = {}
     @modular_roots = {}
     @modular_members = {}
+    @directory_entries = {}
+    @discovery_errors = []
+    @file_errors = {}
+  end
+
+  def coverage_error(path, operation, error)
+    { :path => relative(path), :operation => operation, :error => "#{error.class}: #{error.message}" }
+  end
+
+  def directory_entries(path)
+    @directory_entries[path] ||= begin
+      Dir.entries(path).sort.reject { |entry| entry == "." || entry == ".." }
+    rescue SystemCallError, IOError => error
+      @discovery_errors << coverage_error(path, "list directory", error)
+      []
+    end
   end
 
   def modular_roots(dir = root)
     @modular_roots[dir] ||= begin
       prefix = File.join(dir, "")
-      discovered = (1..MAX_MODULAR_ROOT_DEPTH).flat_map do |depth|
-        MODULAR_ROOT_MARKERS.flat_map do |marker|
-          Dir.glob(File.join(dir, *Array.new(depth + 1, "*"), marker)).map do |f|
-            f[prefix.length..-1].split("/").first(depth).join("/")
+      discovered = []
+      level = [dir]
+      (1..(MAX_MODULAR_ROOT_DEPTH + 1)).each do |depth|
+        level = level.flat_map do |parent|
+          directory_entries(parent).reject { |name| name.start_with?(".") || IGNORED_DIRS.include?(name) }.map do |name|
+            File.join(parent, name)
+          end.select { |path| File.directory?(path) && !File.symlink?(path) }
+        end
+        next if depth < 2
+        level.each do |member|
+          marker = File.file?(File.join(member, "package.yml")) || directory_entries(member).any? { |name| name.end_with?(".gemspec") }
+          lib = File.join(member, "lib")
+          if !marker && File.directory?(lib)
+            marker = directory_entries(lib).any? { |name| File.file?(File.join(lib, name, "engine.rb")) }
           end
+          discovered << member[prefix.length..-1].split("/").first(depth - 1).join("/") if marker
         end
       end
-      discovered = discovered.reject { |m| m.split("/").any? { |seg| IGNORED_DIRS.include?(seg) } }
       (MODULAR_ROOT_SEEDS + discovered).uniq.select { |m| File.directory?(File.join(dir, m)) }.sort
     end
   end
@@ -132,12 +158,7 @@ class Scanner
         queue = [File.join(root, m)]
         until queue.empty?
           dir = queue.shift
-          entries = begin
-            Dir.entries(dir).sort.reject { |e| e == "." || e == ".." }
-          rescue SystemCallError
-            []
-          end
-          entries.each do |name|
+          directory_entries(dir).each do |name|
             next if IGNORED_DIRS.include?(name)
             member = File.join(dir, name)
             next if File.symlink?(member) || !File.directory?(member)
@@ -156,7 +177,8 @@ class Scanner
     @text[path] = begin
       head = File.binread(path, 8192)
       head.nil? || !head.include?("\x00".dup.force_encoding("BINARY"))
-    rescue StandardError
+    rescue SystemCallError, IOError => error
+      @file_errors[path] = coverage_error(path, "read file", error)
       false
     end
   end
@@ -165,7 +187,10 @@ class Scanner
     if File.file?(path)
       [path]
     elsif File.directory?(path)
-      Dir.glob(File.join(path, "**", "*")).sort.select { |f| File.file?(f) }
+      directory_entries(path).reject { |name| name.start_with?(".") }.flat_map do |name|
+        child = File.join(path, name)
+        File.directory?(child) && File.symlink?(child) ? [] : expand(child)
+      end
     else
       []
     end
@@ -207,27 +232,32 @@ class Scanner
 
   # Returns { files_scanned:, hits: [[file, line, text]], suppressed: [...] }.
   def scan(entry)
-    files = Array(entry["search_paths"]).flat_map { |sp| candidate_files(sp) }.uniq.select { |f| text_file?(f) }
-    return path_only(entry, files) if entry["pattern"].to_s.strip.empty?
+    candidates = Array(entry["search_paths"]).flat_map { |sp| candidate_files(sp) }.uniq
+    return path_only(entry, candidates).merge(:errors => @discovery_errors.uniq) if entry["pattern"].to_s.strip.empty?
+    files = candidates.select { |file| text_file?(file) }
+    errors = @discovery_errors + candidates.map { |file| @file_errors[file] }.compact
 
     pattern = Regexp.new(entry["pattern"])
     exclude = entry["exclude"].to_s.empty? ? nil : Regexp.new(entry["exclude"])
     hits = []
     suppressed = []
+    files_scanned = 0
     files.each do |file|
-      content = begin
-        File.read(file)
-      rescue StandardError
-        next
-      end
-      # Scrub rather than skip: skipping a file with one bad byte reports it
-      # as scanned clean.
-      content = content.scrub("?") unless content.valid_encoding?
-      scan_content(content, pattern, exclude).each do |line, text, excluded, start|
-        (excluded ? suppressed : hits) << [relative(file), line, text, start]
+      operation = "read file"
+      begin
+        content = File.read(file)
+        content = content.scrub("?") unless content.valid_encoding?
+        operation = "match file"
+        rows = scan_content(content, pattern, exclude)
+        files_scanned += 1
+        rows.each do |line, text, excluded, start|
+          (excluded ? suppressed : hits) << [relative(file), line, text, start]
+        end
+      rescue StandardError => error
+        errors << coverage_error(file, operation, error)
       end
     end
-    { :files_scanned => files.length, :hits => hits, :suppressed => suppressed }
+    { :files_scanned => files_scanned, :hits => hits, :suppressed => suppressed, :errors => errors.uniq }
   end
 
   def path_only(entry, files)
@@ -309,8 +339,6 @@ class Scanner
 
   def safe_match(pattern, content, pos)
     pattern.match(content, pos)
-  rescue ArgumentError, Encoding::CompatibilityError
-    nil
   end
 end
 
@@ -489,8 +517,9 @@ def render_markdown(meta, results, opts)
   zero = results.select { |r| status_of(r) == "clean" }
   all_suppressed = results.select { |r| r[:hits].empty? && !r[:suppressed].empty? }
   unscanned = results.select { |r| status_of(r) == "unscanned" }
+  partial = results.select { |r| status_of(r) == "partial" }
   suppressed = results.reject { |r| r[:suppressed].empty? }
-  out << "#{zero.length} scanned clean, #{unscanned.length} UNSCANNED, #{suppressed.length} with sites suppressed by `exclude:` " \
+  out << "#{zero.length} scanned clean, #{unscanned.length} UNSCANNED, #{partial.length} with partial coverage, #{suppressed.length} with sites suppressed by `exclude:` " \
          "(#{all_suppressed.length} with every site suppressed, which is not the same as clean)."
 
   unless opts[:summary]
@@ -554,6 +583,14 @@ def render_markdown(meta, results, opts)
     unscanned.each { |r| out << "- `#{r[:variable]}` #{r[:name]}: #{Array(r[:search_paths]).inspect}" }
   end
 
+  unless partial.empty?
+    out << "" << "## Partial coverage" << ""
+    out << "These rules have discovery, read, or matching errors. Successful findings are retained, but the rules are not scanned clean."
+    partial.each do |r|
+      Array(r[:errors]).each { |error| out << "- `#{r[:variable]}`: #{error[:path]} (#{error[:operation]}): #{error[:error]}" }
+    end
+  end
+
   out.join("\n") + "\n"
 end
 
@@ -564,7 +601,8 @@ def site_files(r)
 end
 
 def status_of(r)
-  if !r[:hits].empty? then "found"
+  if !Array(r[:errors]).empty? then "partial"
+  elsif !r[:hits].empty? then "found"
   elsif !r[:suppressed].empty? then "suppressed"
   # A path-based entry (pattern: "") asks whether the path exists, so an
   # absent path is its clean answer, not a failure to scan.
@@ -574,7 +612,7 @@ def status_of(r)
 end
 
 def render_json(meta, results)
-  found = results.select { |r| status_of(r) == "found" }
+  found = results.reject { |r| r[:hits].empty? }
   by_kind = {}
   KINDS.each { |k| by_kind[k] = found.count { |r| r[:kind] == k } }
   JSON.pretty_generate(
@@ -588,7 +626,8 @@ def render_json(meta, results)
       "files" => found.flat_map { |r| site_files(r) }.uniq.length,
       "by_kind" => by_kind,
       "unscanned" => results.select { |r| status_of(r) == "unscanned" }.map { |r| r[:variable] },
-      "suppressed" => results.select { |r| status_of(r) == "suppressed" }.map { |r| r[:variable] }
+      "suppressed" => results.select { |r| !r[:suppressed].empty? }.map { |r| r[:variable] },
+      "partial" => results.select { |r| status_of(r) == "partial" }.map { |r| r[:variable] }
     },
     "findings" => results.map do |r|
       {
@@ -597,6 +636,7 @@ def render_json(meta, results)
         "explanation" => r[:explanation], "fix" => r[:fix], "prereqs" => r[:prereqs],
         "sources" => r[:sources], "verified_at" => r[:verified_at],
         "files_scanned" => r[:files_scanned],
+        "errors" => Array(r[:errors]),
         "status" => status_of(r),
         # true when the entry fires on a path existing (pattern: ""); its sites
         # have "line" => null and "file" is the search path.
@@ -631,7 +671,7 @@ def run_scan(patterns_path, root)
         :explanation => entry["explanation"], :fix => entry["fix"], :prereqs => entry["prereqs"],
         :sources => entry["sources"], :verified_at => entry["verified_at"],
         :exclude => entry["exclude"], :search_paths => entry["search_paths"],
-        :files_scanned => r[:files_scanned], :hits => r[:hits], :suppressed => r[:suppressed],
+        :files_scanned => r[:files_scanned], :hits => r[:hits], :suppressed => r[:suppressed], :errors => r[:errors],
         :path_only => r[:path_only]
       }
     end

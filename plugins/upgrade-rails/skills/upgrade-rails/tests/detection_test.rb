@@ -81,3 +81,4 @@ end
 puts "Detection regressions passed."
 
 require_relative "output_test"
+require_relative "coverage_test"
